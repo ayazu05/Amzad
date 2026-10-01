@@ -33,7 +33,7 @@
       width: 100%;
       height: 100%;
       font-family: 'Cormorant Garamond', serif;
-      background: #f7d2d6; /* Warm pink base to prevent black screen */
+      background: #f7d2d6;
       color: var(--text-white);
       overflow-x: hidden;
       scroll-behavior: smooth;
@@ -86,34 +86,6 @@
       height: 100%;
       object-fit: cover;
       display: block;
-    }
-
-    #tap-prompt {
-      position: absolute;
-      bottom: 45px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: #fff;
-      font-size: 0.85rem;
-      font-weight: 500;
-      letter-spacing: 2px;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      text-transform: uppercase;
-      background: rgba(139, 38, 62, 0.85);
-      backdrop-filter: blur(4px);
-      padding: 12px 26px;
-      border-radius: 30px;
-      border: 1px solid rgba(255,255,255,0.4);
-      animation: pulse 2s infinite;
-      pointer-events: none;
-      white-space: nowrap;
-      z-index: 10000;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.85; transform: translateX(-50%) scale(1); }
-      50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
     }
 
     /* Main Content Container */
@@ -451,7 +423,6 @@
     <video id="envelope-video" playsinline webkit-playsinline preload="auto" muted>
       <source src="envelope.mp4" type="video/mp4">
     </video>
-    <div id="tap-prompt"><i class="fas fa-hand-pointer"></i> TAP ANYWHERE TO OPEN</div>
   </div>
 
   <!-- Main Content Page -->
@@ -562,7 +533,6 @@
     const bgVideo = document.getElementById('bg-video');
     const envScreen = document.getElementById('envelope-screen');
     const envVideo = document.getElementById('envelope-video');
-    const tapPrompt = document.getElementById('tap-prompt');
     const mainContent = document.getElementById('main-content');
     const bgMusic = document.getElementById('bg-music');
     let videoStarted = false;
@@ -577,15 +547,12 @@
     function playEnvelopeVideo() {
       if (videoStarted) return;
       videoStarted = true;
-      tapPrompt.style.display = 'none';
 
       bgVideo.muted = true;
       bgVideo.play().catch(e => console.log(e));
 
       envVideo.muted = false;
-      envVideo.play().then(() => {
-        // Smoothly hide prompt once video starts playing
-      }).catch(() => {
+      envVideo.play().catch(() => {
         revealMainCard();
       });
 
