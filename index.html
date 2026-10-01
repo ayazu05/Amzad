@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,10 +15,11 @@
 
   <style>
     :root {
-      --text-gold: #f3e5ab;
-      --text-white: #ffffff;
-      --accent-rose: #e8c5c8;
-      --shadow-dark: rgba(0, 0, 0, 0.65);
+      --gold-primary: #f3e5ab;
+      --gold-light: #fff8dc;
+      --maroon-dark: #2a080c;
+      --maroon-accent: #6b0f1a;
+      --shadow-glow: 0 0 15px rgba(243, 229, 171, 0.4);
     }
 
     * {
@@ -34,13 +34,13 @@
       width: 100%;
       height: 100%;
       font-family: 'Cormorant Garamond', serif;
-      background: #0d0305;
-      color: var(--text-white);
+      background-color: #0d0203;
+      color: var(--gold-primary);
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
 
-    /* Fixed Background Layer */
+    /* Fixed Media Background (MP4 / Image Container) */
     #bg-canvas-container {
       position: fixed;
       top: 0;
@@ -50,7 +50,7 @@
       z-index: 1;
       overflow: hidden;
       pointer-events: none;
-      background: radial-gradient(circle, #3d151e 0%, #0d0305 100%);
+      background: #0d0203;
     }
 
     .bg-media {
@@ -63,22 +63,33 @@
       object-position: center center;
       display: block;
       opacity: 0;
-      transition: opacity 1s ease-in-out;
+      transition: opacity 1.2s ease-in-out;
     }
 
     .bg-media.active {
-      opacity: 1;
+      opacity: 0.65; /* Dark overlay for readability */
     }
 
-    /* Envelope Intro Screen */
-    #envelope-screen {
-      position: fixed;
+    /* Overlay Dark Gradient for Contrast */
+    .bg-overlay {
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      background: radial-gradient(circle, rgba(13, 2, 3, 0.4) 0%, rgba(13, 2, 3, 0.85) 100%);
+      z-index: 2;
+    }
+
+    /* Intro Screen / Envelope Video Overlay */
+    #envelope-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       z-index: 9999;
-      background: #0d0305;
+      background: #0d0203;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -107,22 +118,22 @@
       left: 50%;
       transform: translateX(-50%);
       z-index: 10000;
-      color: #fff;
+      color: var(--gold-primary);
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 0.85rem;
       letter-spacing: 2px;
       text-transform: uppercase;
-      background: rgba(0,0,0,0.75);
+      background: rgba(42, 8, 12, 0.85);
       padding: 12px 24px;
       border-radius: 30px;
-      border: 1px solid rgba(243, 229, 171, 0.4);
+      border: 1px solid var(--gold-primary);
       backdrop-filter: blur(8px);
+      box-shadow: 0 0 15px rgba(0,0,0,0.8);
       display: flex;
       align-items: center;
       gap: 10px;
       animation: pulse 1.8s infinite;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      pointer-events: none;
     }
 
     @keyframes pulse {
@@ -130,12 +141,13 @@
       50% { opacity: 1; transform: translateX(-50%) scale(1.03); }
     }
 
+    /* Main Website Layout */
     #main-content {
       position: relative;
       z-index: 10;
       width: 100%;
       margin: 0 auto;
-      padding-top: 60px;
+      padding-top: 40px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -149,7 +161,7 @@
     }
 
     .content-wrapper {
-      width: 88%;
+      width: 90%;
       max-width: 480px;
       margin: 0 auto;
     }
@@ -159,7 +171,7 @@
       margin-bottom: 50px;
       position: relative;
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(25px);
       transition: opacity 0.8s ease-out, transform 0.8s ease-out;
     }
 
@@ -169,76 +181,56 @@
     }
 
     .hero-heart {
-      font-size: 1.1rem;
-      color: var(--text-gold);
-      margin-bottom: 4px;
+      font-size: 1.2rem;
+      color: var(--gold-primary);
+      margin-bottom: 6px;
+      text-shadow: var(--shadow-glow);
     }
 
     .bismillah-text {
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: 1.15rem;
-      color: var(--text-gold);
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      margin-bottom: 12px;
+      font-size: 1.3rem;
+      color: var(--gold-light);
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
     }
 
     .welcome-text {
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: 1rem;
-      line-height: 1.3;
-      color: var(--text-white);
-      margin-bottom: 15px;
-    }
-
-    .divider-line {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin: 0 auto 15px;
-      width: 140px;
-    }
-
-    .divider-line::before, .divider-line::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-    }
-
-    .divider-line i {
-      font-size: 0.6rem;
-      color: var(--text-gold);
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #e0d0cc;
+      margin-bottom: 20px;
     }
 
     .couple-name {
       font-family: 'Great Vibes', cursive;
-      font-size: 3.8rem;
+      font-size: 4.5rem;
       font-weight: 400;
-      color: var(--text-gold);
-      line-height: 1;
-      margin: 5px 0;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+      color: var(--gold-primary);
+      line-height: 1.1;
+      margin: 4px 0;
+      text-shadow: 0 0 12px rgba(243, 229, 171, 0.5), 0 2px 6px rgba(0,0,0,0.9);
     }
 
     .ampersand {
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: 1.8rem;
-      color: var(--accent-rose);
-      margin: 5px 0;
+      font-size: 2rem;
+      color: #e8c5c8;
+      margin: 4px 0;
     }
 
     .scroll-indicator {
-      margin-top: 25px;
+      margin-top: 30px;
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 0.65rem;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--text-gold);
+      color: var(--gold-primary);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -257,20 +249,20 @@
 
     .section-title {
       font-family: 'Great Vibes', cursive;
-      font-size: 2.8rem;
-      color: var(--text-gold);
-      margin-bottom: 12px;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+      font-size: 3.2rem;
+      color: var(--gold-primary);
+      margin-bottom: 15px;
+      text-shadow: 0 0 10px rgba(243, 229, 171, 0.4);
     }
 
-    /* Scratch Card Section */
+    /* Scratch Card Container */
     .scratch-container {
       position: relative;
-      width: 200px;
-      height: 180px;
-      margin: 10px auto;
-      clip-path: path('M 100 170 C 100 170 10 110 10 55 C 10 22 35 5 62 5 C 80 5 93 15 100 25 C 107 15 120 5 138 5 C 165 5 190 22 190 55 C 190 110 100 170 100 170 Z');
-      filter: drop-shadow(0px 4px 12px rgba(139, 58, 66, 0.4));
+      width: 220px;
+      height: 200px;
+      margin: 15px auto;
+      clip-path: path('M 110 190 C 110 190 10 120 10 60 C 10 24 38 5 68 5 C 88 5 102 16 110 28 C 118 16 132 5 152 5 C 182 5 210 24 210 60 C 210 120 110 190 110 190 Z');
+      filter: drop-shadow(0 0 12px rgba(243, 229, 171, 0.3));
     }
 
     #scratch-canvas {
@@ -295,33 +287,33 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: rgba(30, 15, 20, 0.92);
-      backdrop-filter: blur(6px);
-      padding: 12px;
+      background: linear-gradient(135deg, #2a080c, #420a10);
+      padding: 15px;
+      color: var(--gold-primary);
     }
 
     .scratch-reveal-content h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.15rem;
-      color: var(--text-gold);
-      margin-bottom: 3px;
+      font-size: 1.25rem;
+      color: var(--gold-light);
+      margin-bottom: 4px;
     }
 
     .save-the-date-btn {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: #8b263e;
-      color: var(--text-white);
-      padding: 8px 18px;
-      border-radius: 20px;
+      gap: 8px;
+      background: linear-gradient(135deg, #6b0f1a, #420a10);
+      color: var(--gold-primary);
+      padding: 12px 24px;
+      border-radius: 25px;
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 1px;
       margin-top: 15px;
-      box-shadow: 0 4px 12px rgba(139, 38, 62, 0.4);
-      border: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      border: 1px solid var(--gold-primary);
       cursor: pointer;
     }
 
@@ -329,115 +321,117 @@
     .countdown-grid {
       display: flex;
       justify-content: center;
-      gap: 10px;
+      gap: 12px;
       margin-top: 20px;
     }
 
     .countdown-box {
-      background: rgba(0, 0, 0, 0.65);
+      background: rgba(42, 8, 12, 0.75);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-      padding: 10px 8px;
-      min-width: 60px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+      border: 1px solid var(--gold-primary);
+      border-radius: 12px;
+      padding: 12px 10px;
+      min-width: 65px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
 
     .countdown-value {
       font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-weight: 600;
-      color: var(--text-white);
+      color: var(--gold-primary);
     }
 
     .countdown-label {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.55rem;
+      font-size: 0.6rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: rgba(255, 255, 255, 0.85);
-      margin-top: 3px;
+      color: #e0d0cc;
+      margin-top: 4px;
     }
 
-    /* Event Cards & Venue */
+    /* Event Cards */
     .event-card {
-      margin-bottom: 25px;
-      background: rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(8px);
-      padding: 20px 15px;
-      border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      margin-bottom: 20px;
+      background: rgba(42, 8, 12, 0.75);
+      backdrop-filter: blur(10px);
+      padding: 22px 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(243, 229, 171, 0.4);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
     }
 
     .event-name {
       font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
-      color: var(--text-gold);
-      margin-bottom: 6px;
+      font-size: 1.7rem;
+      color: var(--gold-primary);
+      margin-bottom: 8px;
     }
 
     .event-details {
       font-size: 1rem;
-      color: rgba(255, 255, 255, 0.95);
-      line-height: 1.5;
+      color: #e0d0cc;
+      line-height: 1.6;
     }
 
+    /* Maps */
     .map-clean-wrapper {
-      margin-bottom: 35px;
+      margin-bottom: 25px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 15px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(42, 8, 12, 0.75);
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(243, 229, 171, 0.4);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
     }
 
     .map-title {
       font-family: 'Playfair Display', serif;
       font-size: 1.4rem;
       font-weight: 600;
-      color: var(--text-gold);
-      margin-bottom: 2px;
+      color: var(--gold-primary);
+      margin-bottom: 4px;
     }
 
     .map-address {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.85rem;
-      color: #ddd;
-      margin-bottom: 12px;
-      font-weight: 500;
+      font-size: 0.8rem;
+      color: #ccc;
+      margin-bottom: 14px;
     }
 
     .map-frame {
       width: 100%;
-      height: 210px;
-      border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      margin-bottom: 12px;
+      height: 200px;
+      border-radius: 12px;
+      border: 1px solid var(--gold-primary);
+      margin-bottom: 14px;
     }
 
     .venue-btn {
       display: inline-block;
-      padding: 9px 20px;
-      background: #8b263e;
-      color: #fff;
-      border-radius: 20px;
+      padding: 10px 22px;
+      background: linear-gradient(135deg, #6b0f1a, #420a10);
+      color: var(--gold-primary);
+      border-radius: 25px;
       text-decoration: none;
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 0.8rem;
       font-weight: 600;
       letter-spacing: 0.5px;
+      border: 1px solid var(--gold-primary);
     }
 
-    /* Footer / Bottom Banner */
     .cta-parallax-banner {
       width: 100%;
       margin-top: 30px;
       margin-bottom: 0 !important;
-      padding: 70px 20px;
+      padding: 65px 20px;
       position: relative;
-      background: #110407;
+      background: rgba(13, 2, 3, 0.8);
       overflow: hidden;
     }
 
@@ -449,7 +443,7 @@
       height: 100%;
       object-fit: cover;
       z-index: 1;
-      opacity: 0.65;
+      opacity: 0.35;
     }
 
     .cta-content-box {
@@ -459,18 +453,19 @@
 
     .footer-title {
       font-family: 'Great Vibes', cursive;
-      font-size: 2.8rem;
-      color: var(--text-white);
+      font-size: 3rem;
+      color: var(--gold-primary);
       line-height: 1.2;
       margin-bottom: 12px;
     }
 
     .footer-names {
       font-family: 'Great Vibes', cursive;
-      font-size: 2.4rem;
-      color: var(--text-gold);
+      font-size: 2.5rem;
+      color: var(--gold-light);
     }
 
+    /* Floating Audio Toggle Button */
     #audio-control {
       position: fixed;
       top: 15px;
@@ -479,35 +474,39 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(5px);
-      border: 1px solid rgba(243, 229, 171, 0.5);
-      color: var(--text-gold);
+      background: rgba(42, 8, 12, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-primary);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 1rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      font-size: 0.95rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
   </style>
 </head>
 <body>
 
+  <!-- Audio Element -->
   <button id="audio-control" onclick="toggleAudio()">
     <i id="audio-icon" class="fas fa-music"></i>
   </button>
   <audio id="bg-music" loop src="audio.mp3" preload="auto"></audio>
 
+  <!-- Background Media Canvas (MP4 Video / Image Fallbacks) -->
   <div id="bg-canvas-container">
     <video id="bg-video-main" class="bg-media active" autoplay loop muted playsinline webkit-playsinline preload="auto">
       <source src="bg.mp4" type="video/mp4">
     </video>
     <img id="bg-img-1" class="bg-media" src="bg1.jpg" alt="Background">
+    <div class="bg-overlay"></div>
   </div>
 
-  <div id="envelope-screen">
-    <video id="envelope-video" playsinline webkit-playsinline muted preload="auto">
+  <!-- Envelope Intro Screen -->
+  <div id="envelope-screen" onclick="handleEnvelopeClick()">
+    <video id="envelope-video" playsinline webkit-playsinline preload="auto" muted>
       <source src="envelope.mp4" type="video/mp4">
     </video>
     <div class="tap-hint" id="tap-hint-box">
@@ -515,13 +514,13 @@
     </div>
   </div>
 
+  <!-- Main Website Content -->
   <main id="main-content">
     <div class="content-wrapper">
       <section class="invitation-section" data-bg="bg-video-main">
         <div class="hero-heart"><i class="fas fa-heart"></i></div>
         <div class="bismillah-text">In the Name of Allah</div>
         <p class="welcome-text">We are honored to welcome you to<br>the Wedding ceremony of..</p>
-        <div class="divider-line"><i class="fas fa-heart"></i></div>
         <h1 class="couple-name">Amzad</h1>
         <div class="ampersand">&</div>
         <h1 class="couple-name">Romana</h1>
@@ -534,19 +533,19 @@
       <section class="invitation-section" data-bg="bg-img-1">
         <h2 class="section-title">Scratch to Reveal</h2>
         <div class="scratch-container">
-          <canvas id="scratch-canvas" width="200" height="180"></canvas>
+          <canvas id="scratch-canvas" width="220" height="200"></canvas>
           <div class="scratch-reveal-content">
-            <i class="fas fa-calendar-heart" style="font-size:1.4rem; color:var(--text-gold); margin-bottom:4px;"></i>
+            <i class="fas fa-calendar-heart" style="font-size:1.5rem; color:var(--gold-primary); margin-bottom:6px;"></i>
             <h3>Nikah Ceremony</h3>
-            <p style="font-size:0.95rem; font-weight:600; color:#fff;">23 October 2026</p>
-            <p style="font-size:0.75rem; color:rgba(255,255,255,0.85); margin-top:2px;">Save The Date</p>
+            <p style="font-size:1rem; font-weight:600; color:#fff;">23 October 2026</p>
+            <p style="font-size:0.75rem; color:#e0d0cc; margin-top:4px;">Save The Date</p>
           </div>
         </div>
         <button class="save-the-date-btn"><i class="far fa-calendar-plus"></i> SAVE THE DATE</button>
       </section>
 
       <section class="invitation-section" data-bg="bg-img-1">
-        <h2 class="section-title" style="font-size: 2.3rem;">Counting Down to Forever</h2>
+        <h2 class="section-title" style="font-size: 2.5rem;">Counting Down to Forever</h2>
         <div class="countdown-grid">
           <div class="countdown-box"><div id="cd-days" class="countdown-value">00</div><div class="countdown-label">Days</div></div>
           <div class="countdown-box"><div id="cd-hours" class="countdown-value">00</div><div class="countdown-label">Hours</div></div>
@@ -598,79 +597,69 @@
   <script>
     const envScreen = document.getElementById('envelope-screen');
     const envVideo = document.getElementById('envelope-video');
+    const tapHint = document.getElementById('tap-hint-box');
     const mainContent = document.getElementById('main-content');
     const bgMusic = document.getElementById('bg-music');
-    let isTransitioned = false;
+    const mainBgVideo = document.getElementById('bg-video-main');
+    let isOpened = false;
 
-    // Guaranteed Reveal Function (Prevents getting stuck on black screen)
-    function revealCard() {
-      if (isTransitioned) return;
-      isTransitioned = true;
+    // Force play videos on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      if (mainBgVideo) {
+        mainBgVideo.muted = true;
+        mainBgVideo.play().catch(() => {});
+      }
+      setupScrollAnimations();
+    });
+
+    // Handle Envelope Click / Tap
+    function handleEnvelopeClick() {
+      if (isOpened) return;
+
+      // Play Music
+      if (bgMusic) {
+        bgMusic.play().catch(e => console.log("Audio autoplay prevented", e));
+      }
+
+      if (tapHint) tapHint.style.display = 'none';
+
+      // Play video
+      envVideo.muted = false;
+      const playPromise = envVideo.play();
+
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          setTimeout(revealMainCard, 1200);
+        }).catch(() => {
+          revealMainCard();
+        });
+      } else {
+        revealMainCard();
+      }
+
+      // Safety fallback timer if browser blocks envelope animation
+      setTimeout(revealMainCard, 1500);
+    }
+
+    envVideo.addEventListener('ended', revealMainCard);
+
+    function revealMainCard() {
+      if (isOpened) return;
+      isOpened = true;
 
       envScreen.classList.add('hidden');
       setTimeout(() => {
         mainContent.classList.add('visible');
         triggerInitialAnimations();
-      }, 300);
+      }, 200);
     }
-
-    // Single Tap Event Handler for both Touch & Click
-    function handleOpeningInteraction(e) {
-      if (e) e.stopPropagation();
-
-      // Play music safely on user interaction
-      if (bgMusic) {
-        bgMusic.play().then(() => {
-          document.getElementById('audio-icon').className = 'fas fa-music';
-        }).catch(err => {
-          console.log("Audio play blocked/failed:", err);
-        });
-      }
-
-      // Attempt playing video if supported
-      if (envVideo) {
-        envVideo.muted = false;
-        const playPromise = envVideo.play();
-        if (playPromise !== undefined) {
-          playPromise.then(() => {
-            // Video started playing; reveal after video ends or fallback timer
-            setTimeout(revealCard, 2200);
-          }).catch(err => {
-            console.log("Envelope video blocked on iOS/Safari, revealing immediately:", err);
-            revealCard();
-          });
-        } else {
-          revealCard();
-        }
-      } else {
-        revealCard();
-      }
-
-      // Hard fallback: Force transition within 500ms max so user never sees a black frozen screen
-      setTimeout(revealCard, 500);
-    }
-
-    // Attach click and touch listeners to the entire screen & button
-    envScreen.addEventListener('click', handleOpeningInteraction);
-    envScreen.addEventListener('touchstart', handleOpeningInteraction, { passive: true });
-    envVideo.addEventListener('ended', revealCard);
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const bgVid = document.getElementById('bg-video-main');
-      if (bgVid) {
-        bgVid.muted = true;
-        bgVid.play().catch(e => console.log(e));
-      }
-      setupScrollAnimations();
-    });
 
     function toggleAudio() {
       const icon = document.getElementById('audio-icon');
       if (!bgMusic) return;
       if (bgMusic.paused) {
-        bgMusic.play().then(() => {
-          icon.className = 'fas fa-music';
-        }).catch(err => console.log(err));
+        bgMusic.play();
+        icon.className = 'fas fa-music';
       } else {
         bgMusic.pause();
         icon.className = 'fas fa-volume-mute';
@@ -686,7 +675,7 @@
             if (targetBgId) switchBgMedia(targetBgId);
           }
         });
-      }, { threshold: 0.15 });
+      }, { threshold: 0.1 });
 
       document.querySelectorAll('.invitation-section').forEach(section => {
         observer.observe(section);
@@ -705,28 +694,28 @@
       if (firstSection) firstSection.classList.add('animate-in');
     }
 
-    /* Scratch Card Canvas */
+    // Scratch Heart Canvas Logic
     const canvas = document.getElementById('scratch-canvas');
     const ctx = canvas.getContext('2d');
 
-    function initRoseGoldGlitter() {
+    function initGlitter() {
       const grad = ctx.createRadialGradient(
         canvas.width / 2, canvas.height / 3, 10,
         canvas.width / 2, canvas.height / 2, 110
       );
       grad.addColorStop(0, '#fce4ec');
       grad.addColorStop(0.3, '#f48fb1');
-      grad.addColorStop(0.7, '#c2185b');
-      grad.addColorStop(1, '#6a1b29');
+      grad.addColorStop(0.7, '#6a1b29');
+      grad.addColorStop(1, '#3b060d');
 
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      const particleColors = ['#ffffff', '#fff0f5', '#f8bbd0', '#e91e63', '#d81b60', '#ffd700'];
+      const particleColors = ['#ffffff', '#fff0f5', '#f8bbd0', '#ffd700', '#f3e5ab'];
       for (let i = 0; i < 900; i++) {
         const x = Math.random() * canvas.width;
         const y = Math.random() * canvas.height;
-        const size = Math.random() * 1.8 + 0.4;
+        const size = Math.random() * 2 + 0.4;
         ctx.fillStyle = particleColors[Math.floor(Math.random() * particleColors.length)];
         ctx.globalAlpha = Math.random() * 0.9 + 0.1;
         ctx.beginPath();
@@ -736,7 +725,7 @@
       ctx.globalAlpha = 1.0;
     }
 
-    initRoseGoldGlitter();
+    initGlitter();
 
     let isScratching = false;
 
@@ -748,7 +737,7 @@
 
       ctx.globalCompositeOperation = 'destination-out';
       ctx.beginPath();
-      ctx.arc(x, y, 18, 0, Math.PI * 2);
+      ctx.arc(x, y, 20, 0, Math.PI * 2);
       ctx.fill();
     }
 
@@ -759,7 +748,7 @@
     canvas.addEventListener('touchend', () => isScratching = false);
     canvas.addEventListener('touchmove', scratch);
 
-    /* Countdown Timer */
+    // Live Countdown Timer
     const weddingDate = new Date('October 23, 2026 18:00:00').getTime();
 
     function updateCountdown() {
@@ -784,4 +773,3 @@
   </script>
 </body>
 </html>
-```
