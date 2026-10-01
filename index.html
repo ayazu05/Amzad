@@ -1,559 +1,685 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Amzad &amp; Romana - Wedding Ceremony</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts for Screenshot Typography -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        sunset: {
-                            top: '#2d384c',
-                            mid: '#5c5470',
-                            dusk: '#8a657b',
-                            warm: '#be7b72',
-                            gold: '#f4c493'
-                        }
-                    },
-                    fontFamily: {
-                        alex: ['"Alex Brush"', 'cursive'],
-                        cursive: ['"Great Vibes"', 'cursive'],
-                        serif: ['"Playfair Display"', 'serif'],
-                        cormorant: ['"Cormorant Garamond"', 'serif'],
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Wedding Invitation | Amzad & Romana</title>
 
-    <style>
-        * {
-            -webkit-tap-highlight-color: transparent;
-            box-sizing: border-box;
-        }
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-        body {
-            font-family: 'Cormorant Garamond', serif;
-            color: #ffffff;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-            background: #1a1e29;
-        }
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-        /* Fixed Fullscreen Dynamic Sunset Background */
-        .sky-bg {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            background: linear-gradient(180deg, #2b394e 0%, #4a4763 35%, #7e5c72 65%, #ba726b 85%, #d18d75 100%);
-            background-size: 100% 100%;
-        }
+  <style>
+    :root {
+      --text-gold: #f3e5ab;
+      --text-white: #ffffff;
+      --accent-rose: #e8c5c8;
+      --shadow-dark: rgba(0, 0, 0, 0.7);
+    }
 
-        /* Soft Animated Birds Canvas Overlay */
-        #birdsCanvas {
-            position: fixed;
-            inset: 0;
-            z-index: 1;
-            pointer-events: none;
-            opacity: 0.65;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); border-radius: 10px; }
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      font-family: 'Cormorant Garamond', serif;
+      background-color: #0b0c10;
+      color: var(--text-white);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
 
-        /* Typography Glowing Shadow matching image */
-        .glow-text-title {
-            color: #ffffff;
-            text-shadow: 0 4px 18px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.6);
-        }
+    /* Background Fullscreen Video */
+    #bg-video-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+    }
 
-        .glow-text-sub {
-            color: rgba(255, 255, 255, 0.92);
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-        }
+    #bg-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.85) contrast(1.05);
+    }
 
-        /* Ultra Seamless Transparent Glass Inputs & Interactive Elements */
-        .glass-pure {
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-        }
+    /* Dark Overlay for Text Visibility */
+    #bg-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      background: radial-gradient(circle at center, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%);
+      pointer-events: none;
+    }
 
-        .glass-pill {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-        }
+    /* --- Envelope Intro Video Screen --- */
+    #envelope-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
+    }
 
-        /* Scratch Card Wrapper */
-        .heart-scratch-wrap {
-            clip-path: path('M 140,235 C 140,235 20,165 20,85 C 20,35 60,15 100,15 C 122,15 135,30 140,40 C 145,30 158,15 180,15 C 220,15 260,35 260,85 C 260,165 140,235 140,235 Z');
-            width: 280px;
-            height: 250px;
-            position: relative;
-        }
+    #envelope-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
 
-        /* Subtle Floating Animation */
-        @keyframes gentleFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-        }
+    #envelope-video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
 
-        .animate-float {
-            animation: gentleFloat 4s ease-in-out infinite;
-        }
-    </style>
+    #tap-prompt {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      text-transform: uppercase;
+      background: rgba(0,0,0,0.6);
+      padding: 10px 24px;
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.2);
+      animation: pulse 2s infinite;
+      pointer-events: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+    }
+
+    /* Main Content Wrapper */
+    #main-content {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 650px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1.5s ease, transform 1.5s ease;
+    }
+
+    #main-content.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Section Styling - Entirely Boxless & Transparent */
+    .invitation-section {
+      width: 100%;
+      margin-bottom: 75px;
+      position: relative;
+    }
+
+    /* Hero Section */
+    .hero-heart {
+      font-size: 1.4rem;
+      color: #ffffff;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
+    }
+
+    .welcome-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      color: rgba(255, 255, 255, 0.95);
+      margin-bottom: 25px;
+      text-shadow: 0 2px 6px var(--shadow-dark);
+      letter-spacing: 0.5px;
+    }
+
+    .divider-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 0 auto 30px;
+      width: 180px;
+    }
+
+    .divider-line::before, .divider-line::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+    }
+
+    .divider-line i {
+      font-size: 0.7rem;
+      color: #fff;
+    }
+
+    .couple-name {
+      font-family: 'Great Vibes', cursive;
+      font-size: 5.2rem;
+      font-weight: 400;
+      color: #ffffff;
+      line-height: 1.1;
+      margin: 10px 0;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.9), 0 0 30px rgba(255,255,255,0.3);
+    }
+
+    .ampersand {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 2.2rem;
+      color: var(--accent-rose);
+      margin: 15px 0;
+      text-shadow: 0 2px 8px var(--shadow-dark);
+    }
+
+    .parent-details {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: rgba(255, 255, 255, 0.92);
+      line-height: 1.6;
+      margin-top: 6px;
+      text-shadow: 0 2px 6px var(--shadow-dark);
+    }
+
+    .qualification {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.82rem;
+      font-style: normal;
+      letter-spacing: 1px;
+      color: rgba(255, 255, 255, 0.8);
+      margin-top: 4px;
+    }
+
+    .scroll-indicator {
+      margin-top: 45px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.75);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .scroll-indicator i {
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(8px); }
+      60% { transform: translateY(4px); }
+    }
+
+    /* Section Headings */
+    .section-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.6rem;
+      color: #ffffff;
+      margin-bottom: 20px;
+      text-shadow: 0 3px 12px var(--shadow-dark);
+    }
+
+    /* Scratch Card Section */
+    .scratch-container {
+      position: relative;
+      width: 260px;
+      height: 240px;
+      margin: 20px auto;
+    }
+
+    #scratch-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      cursor: pointer;
+      touch-action: none;
+    }
+
+    .scratch-reveal-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgba(20, 15, 25, 0.75);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 20px;
+      text-shadow: 0 2px 6px var(--shadow-dark);
+    }
+
+    .scratch-reveal-content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--text-gold);
+      margin-bottom: 5px;
+    }
+
+    /* Countdown Timer Section */
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .countdown-box {
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 15px 12px;
+      min-width: 72px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .countdown-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .countdown-label {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: rgba(255, 255, 255, 0.75);
+      margin-top: 4px;
+    }
+
+    /* Events Cards */
+    .event-card {
+      margin-bottom: 35px;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(8px);
+      padding: 25px 20px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      text-shadow: 0 2px 6px var(--shadow-dark);
+    }
+
+    .event-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--text-gold);
+      margin-bottom: 8px;
+    }
+
+    .event-details {
+      font-size: 1.15rem;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.6;
+    }
+
+    .venue-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 22px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 25px;
+      text-decoration: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+    }
+
+    .venue-btn:hover {
+      background: #fff;
+      color: #000;
+    }
+
+    /* RSVP Form */
+    .rsvp-form {
+      width: 100%;
+      max-width: 450px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 14px 18px;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 10px;
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .form-input::placeholder, .form-textarea::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .submit-btn {
+      padding: 15px;
+      background: linear-gradient(135deg, #c5a059 0%, #9e7d3b 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    /* Audio Toggle Button */
+    #audio-control {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+  </style>
 </head>
-<body class="antialiased selection:bg-white/20 selection:text-white">
+<body>
 
-    <div class="sky-bg"></div>
-    <canvas id="birdsCanvas"></canvas>
+  <!-- Audio Toggle -->
+  <button id="audio-control" onclick="toggleAudio()">
+    <i id="audio-icon" class="fas fa-music"></i>
+  </button>
+  <audio id="bg-music" loop src="audio.mp3"></audio>
 
-    <!-- Background Music -->
-    <audio id="bgMusic" loop preload="auto">
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=indian-wedding-ambient-115264.mp3" type="audio/mpeg">
-    </audio>
+  <!-- Background Fullscreen Video -->
+  <div id="bg-video-container">
+    <video id="bg-video" autoplay loop muted playsinline>
+      <source src="bg.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <div id="bg-overlay"></div>
 
-    <!-- Audio Toggle Button -->
-    <button id="musicToggle" onclick="toggleMusic()" aria-label="Toggle Audio" class="fixed top-5 right-5 z-50 w-11 h-11 rounded-full glass-pill text-white shadow-2xl flex items-center justify-center transition-all hover:scale-105 active:scale-95">
-        <i id="musicIcon" class="fa-solid fa-volume-high text-base"></i>
-    </button>
+  <!-- Opening Envelope Screen (Video) -->
+  <div id="envelope-screen" onclick="playEnvelopeVideo()">
+    <video id="envelope-video" playsinline preload="auto">
+      <source src="envelope.mp4" type="video/mp4" />
+    </video>
+    <div id="tap-prompt"><i class="fas fa-hand-pointer"></i> Tap Anywhere to Open</div>
+  </div>
 
-    <div id="envelopeOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md px-4 transition-opacity duration-1000">
-        <div class="text-center max-w-sm w-full p-8 rounded-3xl glass-pure shadow-2xl flex flex-col items-center">
-            <div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center border border-white/30 mb-4 animate-float">
-                <i class="fa-solid fa-heart text-2xl text-rose-300"></i>
-            </div>
-            <p class="font-cormorant italic text-lg text-white/90">You are cordially invited</p>
-            <h1 class="font-alex text-5xl text-white my-2 glow-text-title">Amzad &amp; Romana</h1>
-            <p class="font-sans text-[10px] tracking-[0.25em] uppercase text-white/70 mb-6">23 &amp; 25 October 2026</p>
-            
-            <button onclick="openEnvelope()" class="px-8 py-3.5 rounded-full bg-white/20 hover:bg-white/30 border border-white/40 text-white font-sans text-xs font-semibold tracking-widest uppercase shadow-lg transition active:scale-95 flex items-center gap-2">
-                <i class="fa-solid fa-envelope-open text-rose-300"></i> Open Invitation
-            </button>
+  <!-- Main Content Page -->
+  <main id="main-content">
+
+    <!-- Hero Section -->
+    <section class="invitation-section">
+      <div class="hero-heart"><i class="fas fa-heart"></i></div>
+      <p class="welcome-text">We are honored to welcome you to<br>the Wedding ceremony of..</p>
+
+      <div class="divider-line"><i class="fas fa-heart"></i></div>
+
+      <h1 class="couple-name">Amzad</h1>
+      <p class="parent-details">Son of Mr. & Mrs. Khan</p>
+      <p class="qualification">M.Tech, PhD | Software Engineer</p>
+
+      <div class="ampersand">&</div>
+
+      <h1 class="couple-name">Romana</h1>
+      <p class="parent-details">Daughter of Mr. & Mrs. Pathan</p>
+      <p class="qualification">B.Tech, MBA | Advocate, High Court</p>
+
+      <div class="scroll-indicator">
+        <span>SCROLL DOWN</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </section>
+
+    <!-- Scratch Card Section -->
+    <section class="invitation-section">
+      <h2 class="section-title">Scratch to Reveal</h2>
+      <div class="scratch-container">
+        <canvas id="scratch-canvas" width="260" height="240"></canvas>
+        <div class="scratch-reveal-content">
+          <i class="fas fa-calendar-heart" style="font-size:2rem; color:#f3e5ab; margin-bottom:8px;"></i>
+          <h3>Nikah Ceremony</h3>
+          <p style="font-size:1.1rem; font-weight:600; color:#fff;">23 October 2026</p>
+          <p style="font-size:0.9rem; color:rgba(255,255,255,0.8); margin-top:4px;">Save The Date</p>
         </div>
-    </div>
+      </div>
+    </section>
 
-    <main id="mainContent" class="relative z-10 min-h-screen px-4 py-12 max-w-xl mx-auto text-center opacity-0 transition-opacity duration-1000">
+    <!-- Live Countdown Section -->
+    <section class="invitation-section">
+      <h2 class="section-title">Counting Down to Forever</h2>
+      <div class="countdown-grid">
+        <div class="countdown-box">
+          <div id="cd-days" class="countdown-value">00</div>
+          <div class="countdown-label">Days</div>
+        </div>
+        <div class="countdown-box">
+          <div id="cd-hours" class="countdown-value">00</div>
+          <div class="countdown-label">Hours</div>
+        </div>
+        <div class="countdown-box">
+          <div id="cd-mins" class="countdown-value">00</div>
+          <div class="countdown-label">Mins</div>
+        </div>
+        <div class="countdown-box">
+          <div id="cd-secs" class="countdown-value">00</div>
+          <div class="countdown-label">Secs</div>
+        </div>
+      </div>
+    </section>
 
-        <!-- ================= HERO SECTION (EXACT MATCH TO USER'S SCREENSHOT) ================= -->
-        <section class="pt-6 pb-16 flex flex-col items-center">
-            
-            <!-- Top Heart Icon -->
-            <div class="mb-4 text-white/90">
-                <i class="fa-solid fa-heart text-xl drop-shadow"></i>
-            </div>
+    <!-- Program Timeline & Venues -->
+    <section class="invitation-section">
+      <h2 class="section-title">Events & Venue</h2>
 
-            <!-- Welcome Intro Text -->
-            <p class="font-cormorant italic text-xl sm:text-2xl text-white/90 font-light tracking-wide glow-text-sub max-w-md">
-                We are honored to welcome you to<br>the Wedding ceremony of..
-            </p>
+      <!-- Nikah Event -->
+      <div class="event-card">
+        <h3 class="event-name">Nikah Ceremony</h3>
+        <p class="event-details"><i class="far fa-calendar-alt"></i> 23 October 2026</p>
+        <p class="event-details"><i class="far fa-clock"></i> Evening Ceremony</p>
+        <p class="event-details" style="margin-top:8px;"><i class="fas fa-map-marker-alt"></i> Green Valley Farm House Lawn 1</p>
+        <a href="https://maps.google.com" target="_blank" class="venue-btn"><i class="fas fa-directions"></i> View on Google Maps</a>
+      </div>
 
-            <!-- Horizontal Heart Line Ornament -->
-            <div class="flex items-center justify-center gap-3 w-48 my-6 opacity-80">
-                <div class="h-[1px] bg-gradient-to-r from-transparent via-white to-transparent flex-1"></div>
-                <i class="fa-solid fa-heart text-xs text-white"></i>
-                <div class="h-[1px] bg-gradient-to-r from-transparent via-white to-transparent flex-1"></div>
-            </div>
+      <!-- Walima Event -->
+      <div class="event-card">
+        <h3 class="event-name">Walima Reception</h3>
+        <p class="event-details"><i class="far fa-calendar-alt"></i> 25 October 2026</p>
+        <p class="event-details"><i class="far fa-clock"></i> 1:11 PM onwards</p>
+        <p class="event-details" style="margin-top:8px;"><i class="fas fa-map-marker-alt"></i> Kaka Palace</p>
+        <a href="https://maps.google.com" target="_blank" class="venue-btn"><i class="fas fa-directions"></i> View on Google Maps</a>
+      </div>
+    </section>
 
-            <!-- GROOM NAME: AMZAD (Exact screenshot script styling) -->
-            <h1 class="font-alex text-7xl sm:text-8xl text-white my-1 tracking-wide glow-text-title">
-                Amzad
-            </h1>
+    <!-- RSVP Section -->
+    <section class="invitation-section">
+      <h2 class="section-title">RSVP</h2>
+      <form class="rsvp-form" onsubmit="handleRSVP(event)">
+        <input type="text" class="form-input" placeholder="Your Full Name" required />
+        <select class="form-select" required>
+          <option value="" disabled selected>Will you be attending?</option>
+          <option value="yes">Joyfully Accepts</option>
+          <option value="no">Regretfully Declines</option>
+        </select>
+        <textarea class="form-textarea" rows="3" placeholder="Write your warm wishes for Amzad & Romana..."></textarea>
+        <button type="submit" class="submit-btn">SEND MESSAGE</button>
+      </form>
+    </section>
 
-            <!-- GROOM DETAILS -->
-            <div class="font-cormorant italic text-base sm:text-lg text-white/90 space-y-0.5 mb-6 glow-text-sub">
-                <p>Son of Mr. &amp; Mrs. Khan</p>
-                <p class="text-sm font-sans not-italic font-light opacity-90">M.Tech, PhD</p>
-                <p class="text-sm font-sans not-italic font-light opacity-90">Software Engineer</p>
-            </div>
+  </main>
 
-            <!-- AMPERSAND SYMBOL -->
-            <div class="font-alex text-4xl text-white/90 my-2 italic glow-text-title">&amp;</div>
+  <script>
+    // --- Envelope Screen Handling ---
+    const envScreen = document.getElementById('envelope-screen');
+    const envVideo = document.getElementById('envelope-video');
+    const tapPrompt = document.getElementById('tap-prompt');
+    const mainContent = document.getElementById('main-content');
+    const bgMusic = document.getElementById('bg-music');
+    let videoStarted = false;
 
-            <!-- BRIDE NAME: ROMANA -->
-            <h1 class="font-alex text-7xl sm:text-8xl text-white my-1 tracking-wide glow-text-title">
-                Romana
-            </h1>
+    function playEnvelopeVideo() {
+      if (videoStarted) return;
+      videoStarted = true;
+      tapPrompt.style.display = 'none';
 
-            <!-- BRIDE DETAILS -->
-            <div class="font-cormorant italic text-base sm:text-lg text-white/90 space-y-0.5 mb-10 glow-text-sub">
-                <p>Daughter of Mr. &amp; Mrs. Pathan</p>
-                <p class="text-sm font-sans not-italic font-light opacity-90">B.Tech, MBA</p>
-                <p class="text-sm font-sans not-italic font-light opacity-90">Advocate, High Court</p>
-            </div>
+      // Play audio if available
+      bgMusic.play().catch(() => {});
 
-            <!-- Scroll Indicator -->
-            <div class="mt-4 flex flex-col items-center gap-1 opacity-70">
-                <span class="font-sans text-[10px] tracking-widest uppercase font-medium">Scroll For Event Details</span>
-                <i class="fa-solid fa-chevron-down text-xs animate-bounce mt-1"></i>
-            </div>
-        </section>
+      envVideo.play().catch(err => {
+        console.log("Autoplay issue, skipping intro video:", err);
+        revealMainCard();
+      });
+    }
 
-        <section class="py-10 border-t border-white/15">
-            
-            <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full glass-pill text-xs font-sans uppercase tracking-widest text-white/90 mb-8">
-                <i class="fa-solid fa-calendar-days text-amber-300"></i> Event Schedule
-            </div>
+    envVideo.addEventListener('ended', revealMainCard);
 
-            <div class="space-y-10 text-center">
-                <!-- NIKAH CEREMONY -->
-                <div class="space-y-2">
-                    <span class="font-sans text-[11px] font-semibold tracking-[0.2em] uppercase text-amber-300 bg-white/10 px-3 py-1 rounded-full">
-                        Nikah Ceremony
-                    </span>
-                    <h2 class="font-serif text-3xl font-bold text-white glow-text-title pt-2">23 October 2026</h2>
-                    <p class="font-cormorant text-xl text-white/90 italic glow-text-sub">
-                        <i class="fa-solid fa-location-dot text-amber-300 text-sm mr-1"></i>
-                        Green Valley Farm House Lawn 1
-                    </p>
-                    <a href="https://maps.google.com/?q=Green+Valley+Farm+House+Lawn+1" target="_blank" class="inline-flex items-center gap-2 mt-2 px-5 py-2 rounded-full glass-pill text-xs font-sans text-white hover:bg-white/20 transition">
-                        <i class="fa-solid fa-map-pin text-rose-300"></i> Get Directions
-                    </a>
-                </div>
+    function revealMainCard() {
+      envScreen.classList.add('hidden');
+      setTimeout(() => {
+        mainContent.classList.add('visible');
+      }, 300);
+    }
 
-                <!-- WALIMA RECEPTION -->
-                <div class="space-y-2 pt-4">
-                    <span class="font-sans text-[11px] font-semibold tracking-[0.2em] uppercase text-amber-300 bg-white/10 px-3 py-1 rounded-full">
-                        Walima Reception
-                    </span>
-                    <h2 class="font-serif text-3xl font-bold text-white glow-text-title pt-2">25 October 2026</h2>
-                    <p class="font-cormorant text-xl text-white/90 italic glow-text-sub">
-                        <i class="fa-solid fa-building-columns text-amber-300 text-sm mr-1"></i>
-                        Kaka Palace
-                    </p>
-                    <a href="https://maps.google.com/?q=Kaka+Palace" target="_blank" class="inline-flex items-center gap-2 mt-2 px-5 py-2 rounded-full glass-pill text-xs font-sans text-white hover:bg-white/20 transition">
-                        <i class="fa-solid fa-map-pin text-rose-300"></i> Get Directions
-                    </a>
-                </div>
-            </div>
-        </section>
+    // Background Music Toggle
+    function toggleAudio() {
+      const icon = document.getElementById('audio-icon');
+      if (bgMusic.paused) {
+        bgMusic.play();
+        icon.className = 'fas fa-music';
+      } else {
+        bgMusic.pause();
+        icon.className = 'fas fa-volume-mute';
+      }
+    }
 
-        <section class="py-12 border-t border-white/15 flex flex-col items-center">
-            <h3 class="font-serif text-2xl text-white font-bold glow-text-title mb-1">Scratch To Reveal Nikah Date</h3>
-            <p class="font-sans text-xs text-white/80 mb-6">Swipe or drag across the heart frame below</p>
+    // --- Scratch Card Logic ---
+    const canvas = document.getElementById('scratch-canvas');
+    const ctx = canvas.getContext('2d');
 
-            <div class="heart-scratch-wrap bg-gradient-to-br from-rose-900/60 to-purple-900/60 rounded-2xl flex items-center justify-center p-4 shadow-2xl border border-white/20">
-                <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center">
-                    <i class="fa-solid fa-calendar-heart text-3xl text-amber-300 mb-1"></i>
-                    <span class="font-sans text-[10px] font-bold tracking-widest text-amber-200 uppercase">Nikah Day</span>
-                    <span class="font-serif text-2xl font-bold text-white my-1">23 October 2026</span>
-                    <span class="font-cormorant italic text-sm text-white/90">Green Valley Farm House Lawn 1</span>
-                </div>
-                <canvas id="scratchCanvas" width="280" height="250" class="absolute inset-0 z-10 cursor-pointer touch-none"></canvas>
-            </div>
+    function initScratchCard() {
+      ctx.fillStyle = '#d4af37';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      ctx.fillStyle = '#8b6b23';
+      ctx.font = '16px Plus Jakarta Sans';
+      ctx.textAlign = 'center';
+      ctx.fillText('Scratch Here', canvas.width / 2, canvas.height / 2);
+    }
 
-            <button onclick="saveTheDate()" class="mt-6 px-6 py-3 rounded-full glass-pill hover:bg-white/20 text-white font-sans text-xs uppercase tracking-widest transition flex items-center gap-2">
-                <i class="fa-regular fa-calendar-plus text-amber-300"></i> Add To Calendar
-            </button>
-        </section>
+    initScratchCard();
 
-        <section class="py-12 border-t border-white/15">
-            <h3 class="font-serif text-2xl text-white font-bold glow-text-title mb-1">Countdown To Celebration</h3>
-            <p class="font-sans text-xs text-white/80 mb-6">23 October 2026</p>
+    let isScratching = false;
 
-            <div class="grid grid-cols-4 gap-3 max-w-sm mx-auto">
-                <div class="glass-pill p-3 rounded-2xl text-center">
-                    <span id="cdDays" class="block font-serif text-3xl font-bold text-amber-300">00</span>
-                    <span class="font-sans text-[9px] uppercase tracking-wider text-white/80">Days</span>
-                </div>
-                <div class="glass-pill p-3 rounded-2xl text-center">
-                    <span id="cdHours" class="block font-serif text-3xl font-bold text-amber-300">00</span>
-                    <span class="font-sans text-[9px] uppercase tracking-wider text-white/80">Hours</span>
-                </div>
-                <div class="glass-pill p-3 rounded-2xl text-center">
-                    <span id="cdMinutes" class="block font-serif text-3xl font-bold text-amber-300">00</span>
-                    <span class="font-sans text-[9px] uppercase tracking-wider text-white/80">Mins</span>
-                </div>
-                <div class="glass-pill p-3 rounded-2xl text-center">
-                    <span id="cdSeconds" class="block font-serif text-3xl font-bold text-amber-300">00</span>
-                    <span class="font-sans text-[9px] uppercase tracking-wider text-white/80">Secs</span>
-                </div>
-            </div>
-        </section>
+    function scratch(e) {
+      if (!isScratching) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.clientX || e.touches[0].clientX) - rect.left;
+      const y = (e.clientY || e.touches[0].clientY) - rect.top;
 
-        <section class="py-12 border-t border-white/15">
-            <h3 class="font-serif text-2xl text-white font-bold glow-text-title mb-4">Cherished Moments</h3>
-            
-            <div class="relative w-full h-72 sm:h-80 rounded-3xl overflow-hidden glass-pure shadow-2xl border border-white/20">
-                <img id="galleryImg" src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1000&auto=format&fit=crop" alt="Wedding Portrait" class="w-full h-full object-cover transition-all duration-700">
-                
-                <button onclick="prevImage()" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full glass-pill text-white flex items-center justify-center hover:bg-white/30 transition">
-                    <i class="fa-solid fa-chevron-left text-xs"></i>
-                </button>
-                <button onclick="nextImage()" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full glass-pill text-white flex items-center justify-center hover:bg-white/30 transition">
-                    <i class="fa-solid fa-chevron-right text-xs"></i>
-                </button>
-            </div>
-        </section>
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.beginPath();
+      ctx.arc(x, y, 22, 0, Math.PI * 2);
+      ctx.fill();
+    }
 
-        <section class="py-12 border-t border-white/15 text-left">
-            <div class="text-center mb-6">
-                <h3 class="font-serif text-3xl text-white font-bold glow-text-title">R.S.V.P</h3>
-                <p class="font-sans text-xs text-white/80 mt-1">Please confirm your presence</p>
-            </div>
+    canvas.addEventListener('mousedown', () => isScratching = true);
+    canvas.addEventListener('mouseup', () => isScratching = false);
+    canvas.addEventListener('mousemove', scratch);
 
-            <form id="rsvpForm" onsubmit="handleRSVP(event)" class="space-y-4 font-sans text-xs max-w-md mx-auto relative">
-                <div>
-                    <label class="block text-white/90 font-medium mb-1">Your Full Name *</label>
-                    <input type="text" required placeholder="Enter your name" class="w-full px-4 py-3 rounded-xl glass-pill text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-amber-300">
-                </div>
+    canvas.addEventListener('touchstart', () => isScratching = true);
+    canvas.addEventListener('touchend', () => isScratching = false);
+    canvas.addEventListener('touchmove', scratch);
 
-                <div>
-                    <label class="block text-white/90 font-medium mb-1">Will you attend? *</label>
-                    <select required class="w-full px-4 py-3 rounded-xl glass-pill text-white focus:outline-none focus:ring-2 focus:ring-amber-300 bg-slate-900/80">
-                        <option value="" disabled selected>Select an option...</option>
-                        <option value="yes">Joyfully Attending Both (Nikah &amp; Walima)</option>
-                        <option value="nikah">Attending Nikah Only</option>
-                        <option value="walima">Attending Walima Only</option>
-                        <option value="no">Regretfully Decline</option>
-                    </select>
-                </div>
+    // --- Countdown Timer ---
+    const weddingDate = new Date('October 23, 2026 18:00:00').getTime();
 
-                <div>
-                    <label class="block text-white/90 font-medium mb-1">Blessings / Message</label>
-                    <textarea rows="3" placeholder="Write your warm wishes for Amzad & Romana..." class="w-full px-4 py-3 rounded-xl glass-pill text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-amber-300"></textarea>
-                </div>
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = weddingDate - now;
 
-                <button type="submit" class="w-full py-3.5 bg-white/20 hover:bg-white/30 border border-white/40 text-white font-bold uppercase tracking-widest rounded-xl transition active:scale-95 text-xs shadow-lg">
-                    Send Confirmation
-                </button>
+      if (distance < 0) return;
 
-                <!-- RSVP Modal -->
-                <div id="rsvpSuccess" class="hidden absolute inset-0 bg-slate-900/90 backdrop-blur-md rounded-2xl p-6 text-center flex flex-col items-center justify-center">
-                    <i class="fa-solid fa-heart text-3xl text-rose-400 mb-2 animate-bounce"></i>
-                    <h4 class="font-serif text-2xl text-white font-bold">Thank You!</h4>
-                    <p class="font-sans text-xs text-white/80 mt-1">Your response has been saved. We look forward to seeing you!</p>
-                    <button type="button" onclick="resetRSVP()" class="mt-4 text-xs font-sans text-amber-300 underline">Send another response</button>
-                </div>
-            </form>
-        </section>
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((distance % (1000 * 60)) / 1000);
 
-        <footer class="pt-8 pb-12 border-t border-white/15 text-center">
-            <h2 class="font-alex text-5xl text-white glow-text-title mb-1">Amzad &amp; Romana</h2>
-            <p class="font-sans text-[10px] uppercase tracking-widest text-white/70">23 &amp; 25 October 2026</p>
-        </footer>
+      document.getElementById('cd-days').innerText = String(days).padStart(2, '0');
+      document.getElementById('cd-hours').innerText = String(hours).padStart(2, '0');
+      document.getElementById('cd-mins').innerText = String(mins).padStart(2, '0');
+      document.getElementById('cd-secs').innerText = String(secs).padStart(2, '0');
+    }
 
-    </main>
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
 
-    <script>
-        /* Animated Canvas Flying Birds Background */
-        function initBirdsCanvas() {
-            const canvas = document.getElementById('birdsCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-
-            function resize() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            resize();
-            window.addEventListener('resize', resize);
-
-            const birds = Array.from({ length: 8 }, () => ({
-                x: Math.random() * canvas.width,
-                y: Math.random() * (canvas.height * 0.4) + 40,
-                speed: Math.random() * 0.8 + 0.4,
-                size: Math.random() * 8 + 8,
-                wingState: 0,
-                wingSpeed: Math.random() * 0.08 + 0.05
-            }));
-
-            function drawBird(b) {
-                ctx.save();
-                ctx.translate(b.x, b.y);
-                ctx.strokeStyle = "rgba(255, 255, 255, 0.7)";
-                ctx.lineWidth = 1.5;
-                ctx.beginPath();
-                
-                const wingY = Math.sin(b.wingState) * (b.size * 0.5);
-                ctx.moveTo(-b.size, wingY);
-                ctx.quadraticCurveTo(-b.size * 0.4, -b.size * 0.3, 0, 0);
-                ctx.quadraticCurveTo(b.size * 0.4, -b.size * 0.3, b.size, wingY);
-                ctx.stroke();
-                ctx.restore();
-            }
-
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                birds.forEach(b => {
-                    b.x += b.speed;
-                    b.wingState += b.wingSpeed;
-                    if (b.x > canvas.width + 20) {
-                        b.x = -20;
-                        b.y = Math.random() * (canvas.height * 0.4) + 40;
-                    }
-                    drawBird(b);
-                });
-                requestAnimationFrame(animate);
-            }
-            animate();
-        }
-        initBirdsCanvas();
-
-        /* Envelope Unlock Logic */
-        function openEnvelope() {
-            const overlay = document.getElementById('envelopeOverlay');
-            const mainContent = document.getElementById('mainContent');
-            const bgMusic = document.getElementById('bgMusic');
-
-            if (bgMusic) bgMusic.play().catch(() => {});
-
-            if (overlay) {
-                overlay.classList.add('opacity-0', 'pointer-events-none');
-            }
-            if (mainContent) {
-                mainContent.classList.remove('opacity-0');
-            }
-            initScratchCanvas();
-        }
-
-        /* Music Controls */
-        function toggleMusic() {
-            const bgMusic = document.getElementById('bgMusic');
-            const musicIcon = document.getElementById('musicIcon');
-            if (!bgMusic) return;
-
-            if (bgMusic.paused) {
-                bgMusic.play();
-                if (musicIcon) musicIcon.className = "fa-solid fa-volume-high text-base";
-            } else {
-                bgMusic.pause();
-                if (musicIcon) musicIcon.className = "fa-solid fa-volume-xmark text-base";
-            }
-        }
-
-        /* Countdown Timer */
-        const targetDate = new Date('October 23, 2026 11:00:00').getTime();
-
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const diff = targetDate - now;
-
-            if (diff > 0) {
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-                const elDays = document.getElementById('cdDays');
-                const elHours = document.getElementById('cdHours');
-                const elMins = document.getElementById('cdMinutes');
-                const elSecs = document.getElementById('cdSeconds');
-
-                if (elDays) elDays.innerText = days < 10 ? '0' + days : days;
-                if (elHours) elHours.innerText = hours < 10 ? '0' + hours : hours;
-                if (elMins) elMins.innerText = mins < 10 ? '0' + mins : mins;
-                if (elSecs) elSecs.innerText = secs < 10 ? '0' + secs : secs;
-            }
-        }
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-
-        /* Photo Gallery Carousel */
-        const images = [
-            "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1000&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1000&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1000&auto=format&fit=crop"
-        ];
-        let currentImgIdx = 0;
-
-        function nextImage() {
-            currentImgIdx = (currentImgIdx + 1) % images.length;
-            const img = document.getElementById('galleryImg');
-            if (img) img.src = images[currentImgIdx];
-        }
-
-        function prevImage() {
-            currentImgIdx = (currentImgIdx - 1 + images.length) % images.length;
-            const img = document.getElementById('galleryImg');
-            if (img) img.src = images[currentImgIdx];
-        }
-
-        /* Interactive Scratch Canvas */
-        function initScratchCanvas() {
-            const canvas = document.getElementById('scratchCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            
-            // Soft Golden Canvas Top Overlay
-            const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-            grad.addColorStop(0, '#d4af37');
-            grad.addColorStop(0.5, '#f3e5ab');
-            grad.addColorStop(1, '#aa7c11');
-            
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.font = '600 13px "Plus Jakarta Sans"';
-            ctx.fillStyle = '#2d1810';
-            ctx.textAlign = 'center';
-            ctx.fillText('Scratch Here ✨', canvas.width / 2, canvas.height / 2);
-
-            let isDrawing = false;
-
-            function scratch(e) {
-                if (!isDrawing) return;
-                const rect = canvas.getBoundingClientRect();
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                const x = clientX - rect.left;
-                const y = clientY - rect.top;
-
-                ctx.globalCompositeOperation = 'destination-out';
-                ctx.beginPath();
-                ctx.arc(x, y, 22, 0, Math.PI * 2);
-                ctx.fill();
-            }
-
-            canvas.addEventListener('mousedown', (e) => { isDrawing = true; scratch(e); });
-            canvas.addEventListener('mousemove', scratch);
-            window.addEventListener('mouseup', () => { isDrawing = false; });
-
-            canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
-            canvas.addEventListener('touchmove', scratch);
-            window.addEventListener('touchend', () => { isDrawing = false; });
-        }
-
-        /* Save to Calendar */
-        function saveTheDate() {
-            const title = "Nikah & Walima - Amzad & Romana";
-            const details = "Nikah on 23 Oct 2026 at Green Valley Farm House Lawn 1 | Walima on 25 Oct 2026 at Kaka Palace";
-            const location = "Green Valley Farm House Lawn 1 / Kaka Palace";
-            const googleCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=20261023T053000Z/20261025T180000Z&details=${encodeURIComponent(details)}&location=${encodeURIComponent(location)}`;
-            window.open(googleCalUrl, '_blank');
-        }
-
-        /* RSVP Handlers */
-        function handleRSVP(e) {
-            e.preventDefault();
-            const successEl = document.getElementById('rsvpSuccess');
-            if (successEl) successEl.classList.remove('hidden');
-        }
-
-        function resetRSVP() {
-            const form = document.getElementById('rsvpForm');
-            const successEl = document.getElementById('rsvpSuccess');
-            if (form) form.reset();
-            if (successEl) successEl.classList.add('hidden');
-        }
-    </script>
+    // --- RSVP Submission ---
+    function handleRSVP(e) {
+      e.preventDefault();
+      alert("Thank you for your RSVP! Your wishes have been sent to Amzad & Romana.");
+      e.target.reset();
+    }
+  </script>
 </body>
 </html>
