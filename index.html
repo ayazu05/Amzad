@@ -33,7 +33,7 @@
       width: 100%;
       height: 100%;
       font-family: 'Cormorant Garamond', serif;
-      background: #000;
+      background: #f7d2d6; /* Warm pink base to prevent black screen */
       color: var(--text-white);
       overflow-x: hidden;
       scroll-behavior: smooth;
@@ -58,6 +58,64 @@
       display: block;
     }
 
+    /* Fullscreen Envelope Intro Screen */
+    #envelope-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      background: #f5cfd3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: opacity 1s ease, visibility 1s;
+      overflow: hidden;
+    }
+
+    #envelope-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    #envelope-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    #tap-prompt {
+      position: absolute;
+      bottom: 45px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      text-transform: uppercase;
+      background: rgba(139, 38, 62, 0.85);
+      backdrop-filter: blur(4px);
+      padding: 12px 26px;
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.4);
+      animation: pulse 2s infinite;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 10000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.85; transform: translateX(-50%) scale(1); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+    }
+
     /* Main Content Container */
     #main-content {
       position: relative;
@@ -70,7 +128,14 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+
+    #main-content.visible {
       opacity: 1;
+      transform: translateY(0);
     }
 
     .invitation-section {
@@ -381,6 +446,14 @@
     </video>
   </div>
 
+  <!-- Opening Envelope Screen -->
+  <div id="envelope-screen" onclick="playEnvelopeVideo()">
+    <video id="envelope-video" playsinline webkit-playsinline preload="auto" muted>
+      <source src="envelope.mp4" type="video/mp4">
+    </video>
+    <div id="tap-prompt"><i class="fas fa-hand-pointer"></i> TAP ANYWHERE TO OPEN</div>
+  </div>
+
   <!-- Main Content Page -->
   <main id="main-content">
 
@@ -487,20 +560,46 @@
 
   <script>
     const bgVideo = document.getElementById('bg-video');
+    const envScreen = document.getElementById('envelope-screen');
+    const envVideo = document.getElementById('envelope-video');
+    const tapPrompt = document.getElementById('tap-prompt');
+    const mainContent = document.getElementById('main-content');
     const bgMusic = document.getElementById('bg-music');
+    let videoStarted = false;
 
-    // Force play bg-video on load
+    // Load background video
     window.addEventListener('DOMContentLoaded', () => {
       bgVideo.muted = true;
       bgVideo.play().catch(e => console.log('Autoplay deferred:', e));
     });
 
-    // Auto play music on user interaction
-    window.addEventListener('click', () => {
-      if (bgMusic && bgMusic.paused) {
-        bgMusic.play().catch(() => {});
-      }
-    }, { once: true });
+    // User click handler on envelope slide
+    function playEnvelopeVideo() {
+      if (videoStarted) return;
+      videoStarted = true;
+      tapPrompt.style.display = 'none';
+
+      bgVideo.muted = true;
+      bgVideo.play().catch(e => console.log(e));
+
+      envVideo.muted = false;
+      envVideo.play().then(() => {
+        // Smoothly hide prompt once video starts playing
+      }).catch(() => {
+        revealMainCard();
+      });
+
+      if (bgMusic) bgMusic.play().catch(() => {});
+    }
+
+    envVideo.addEventListener('ended', revealMainCard);
+
+    function revealMainCard() {
+      envScreen.classList.add('hidden');
+      setTimeout(() => {
+        mainContent.classList.add('visible');
+      }, 300);
+    }
 
     function toggleAudio() {
       const icon = document.getElementById('audio-icon');
