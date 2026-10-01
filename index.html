@@ -113,14 +113,14 @@
       50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
     }
 
-    /* Compact Main Content Container */
+    /* Main Content Container */
     #main-content {
       position: relative;
       z-index: 10;
-      width: 82%; /* Reduced container width to keep text inside the frame */
+      width: 82%;
       max-width: 480px;
       margin: 0 auto;
-      padding: 90px 10px 60px; /* Top padding added so text starts below top flowers */
+      padding: 85px 10px 60px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -137,7 +137,7 @@
 
     .invitation-section {
       width: 100%;
-      margin-bottom: 50px;
+      margin-bottom: 45px;
       position: relative;
     }
 
@@ -180,7 +180,7 @@
 
     .couple-name {
       font-family: 'Great Vibes', cursive;
-      font-size: 3.8rem; /* Scaled down font size so it fits inside frame */
+      font-size: 3.8rem;
       font-weight: 400;
       color: #2b2b2b;
       line-height: 1;
@@ -224,18 +224,20 @@
     .section-title {
       font-family: 'Great Vibes', cursive;
       font-size: 2.8rem;
-      color: #2b2b2b;
-      margin-bottom: 15px;
+      color: #8b3a42;
+      margin-bottom: 12px;
       text-shadow: 0 2px 10px rgba(255,255,255,0.9);
     }
 
-    /* Scratch Card Container */
+    /* Heart Scratch Container - Slightly Smaller Size */
     .scratch-container {
       position: relative;
-      width: 240px;
-      height: 220px;
-      margin: 15px auto;
-      clip-path: path('M 120 210 C 120 210 10 135 10 72 C 10 30 38 10 72 10 C 98 10 113 25 120 36 C 127 25 142 10 168 10 C 202 10 230 30 230 72 C 230 135 120 210 120 210 Z');
+      width: 200px;
+      height: 180px;
+      margin: 10px auto;
+      /* Perfect heart shape clipping path */
+      clip-path: path('M 100 170 C 100 170 10 110 10 55 C 10 22 35 5 62 5 C 80 5 93 15 100 25 C 107 15 120 5 138 5 C 165 5 190 22 190 55 C 190 110 100 170 100 170 Z');
+      filter: drop-shadow(0px 4px 12px rgba(139, 58, 66, 0.4));
     }
 
     #scratch-canvas {
@@ -260,17 +262,34 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: rgba(20, 15, 25, 0.85);
-      backdrop-filter: blur(8px);
-      padding: 15px;
+      background: rgba(30, 15, 20, 0.88);
+      backdrop-filter: blur(6px);
+      padding: 12px;
       text-shadow: 0 2px 6px var(--shadow-dark);
     }
 
     .scratch-reveal-content h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      color: var(--text-gold);
-      margin-bottom: 4px;
+      font-size: 1.15rem;
+      color: #f3e5ab;
+      margin-bottom: 3px;
+    }
+
+    .save-the-date-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #8b263e;
+      color: #ffffff;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-top: 15px;
+      box-shadow: 0 4px 12px rgba(139, 38, 62, 0.4);
+      border: none;
     }
 
     /* Countdown Section */
@@ -455,23 +474,28 @@
       </div>
     </section>
 
-    <!-- Heart-shaped Scratch Card Section -->
+    <!-- Heart-shaped Glitter Scratch Card Section -->
     <section class="invitation-section">
       <h2 class="section-title">Scratch to Reveal</h2>
+      
       <div class="scratch-container">
-        <canvas id="scratch-canvas" width="240" height="220"></canvas>
+        <canvas id="scratch-canvas" width="200" height="180"></canvas>
         <div class="scratch-reveal-content">
-          <i class="fas fa-calendar-heart" style="font-size:1.6rem; color:#f3e5ab; margin-bottom:6px;"></i>
+          <i class="fas fa-calendar-heart" style="font-size:1.4rem; color:#f3e5ab; margin-bottom:4px;"></i>
           <h3>Nikah Ceremony</h3>
-          <p style="font-size:1rem; font-weight:600; color:#fff;">23 October 2026</p>
-          <p style="font-size:0.8rem; color:rgba(255,255,255,0.8); margin-top:2px;">Save The Date</p>
+          <p style="font-size:0.95rem; font-weight:600; color:#fff;">23 October 2026</p>
+          <p style="font-size:0.75rem; color:rgba(255,255,255,0.85); margin-top:2px;">Save The Date</p>
         </div>
       </div>
+
+      <button class="save-the-date-btn">
+        <i class="far fa-calendar-plus"></i> SAVE THE DATE
+      </button>
     </section>
 
     <!-- Live Countdown Section -->
     <section class="invitation-section">
-      <h2 class="section-title">Counting Down to Forever</h2>
+      <h2 class="section-title" style="font-size: 2.3rem;">Counting Down to Forever</h2>
       <div class="countdown-grid">
         <div class="countdown-box">
           <div id="cd-days" class="countdown-value">00</div>
@@ -584,49 +608,40 @@
       }
     }
 
-    // --- Heart Scratch Card Canvas ---
+    // --- Rose Gold Glitter Heart Canvas ---
     const canvas = document.getElementById('scratch-canvas');
     const ctx = canvas.getContext('2d');
 
-    function drawFlower(cx, cy, radius, petColor, centerColor) {
-      ctx.fillStyle = petColor;
-      for (let i = 0; i < 6; i++) {
-        const angle = (i * Math.PI) / 3;
-        const px = cx + Math.cos(angle) * (radius * 0.75);
-        const py = cy + Math.sin(angle) * (radius * 0.75);
-        ctx.beginPath();
-        ctx.arc(px, py, radius * 0.5, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      ctx.fillStyle = centerColor;
-      ctx.beginPath();
-      ctx.arc(cx, cy, radius * 0.4, 0, Math.PI * 2);
-      ctx.fill();
-    }
+    function initRoseGoldGlitter() {
+      // Base Rose Gold Metallic Gradient
+      const grad = ctx.createRadialGradient(
+        canvas.width / 2, canvas.height / 3, 10,
+        canvas.width / 2, canvas.height / 2, 110
+      );
+      grad.addColorStop(0, '#fce4ec');
+      grad.addColorStop(0.3, '#f48fb1');
+      grad.addColorStop(0.7, '#c2185b');
+      grad.addColorStop(1, '#6a1b29');
 
-    function initScratchCard() {
-      ctx.fillStyle = '#d4af37';
+      ctx.fillStyle = grad;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      const flowers = [
-        {x: 35, y: 40, r: 10}, {x: 205, y: 40, r: 10},
-        {x: 120, y: 25, r: 8}, {x: 70, y: 95, r: 12},
-        {x: 170, y: 95, r: 12}, {x: 120, y: 150, r: 13},
-        {x: 120, y: 185, r: 8}, {x: 85, y: 135, r: 9},
-        {x: 155, y: 135, r: 9}
-      ];
-
-      flowers.forEach(f => {
-        drawFlower(f.x, f.y, f.r, '#ffffff', '#8b6b23');
-      });
-
-      ctx.fillStyle = '#4a370e';
-      ctx.font = 'bold 14px Plus Jakarta Sans';
-      ctx.textAlign = 'center';
-      ctx.fillText('Scratch Flowers Here', canvas.width / 2, canvas.height / 2);
+      // Draw Rose Gold Metallic Glitter Particles
+      const particleColors = ['#ffffff', '#fff0f5', '#f8bbd0', '#e91e63', '#d81b60', '#ffd700'];
+      for (let i = 0; i < 900; i++) {
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height;
+        const size = Math.random() * 1.8 + 0.4;
+        ctx.fillStyle = particleColors[Math.floor(Math.random() * particleColors.length)];
+        ctx.globalAlpha = Math.random() * 0.9 + 0.1;
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1.0;
     }
 
-    initScratchCard();
+    initRoseGoldGlitter();
 
     let isScratching = false;
 
@@ -638,7 +653,7 @@
 
       ctx.globalCompositeOperation = 'destination-out';
       ctx.beginPath();
-      ctx.arc(x, y, 20, 0, Math.PI * 2);
+      ctx.arc(x, y, 18, 0, Math.PI * 2);
       ctx.fill();
     }
 
