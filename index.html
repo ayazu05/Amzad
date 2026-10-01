@@ -450,10 +450,11 @@
 </head>
 <body>
 
+  <!-- Audio Control Button (Mute / Unmute) -->
   <button id="audio-control" onclick="toggleAudio()">
     <i id="audio-icon" class="fas fa-music"></i>
   </button>
-  <audio id="bg-music" loop src="audio.mp3" preload="auto" playsinline webkit-playsinline></audio>
+  <audio id="bg-music" loop src="weddingsong.mp3" preload="auto" playsinline webkit-playsinline></audio>
 
   <div id="bg-canvas-container">
     <video id="bg-video-main" class="bg-media active" autoplay loop muted playsinline webkit-playsinline preload="auto">
@@ -569,10 +570,6 @@
       if (e) e.preventDefault();
       if (isOpened) return;
 
-      if (bgMusic) {
-        bgMusic.play().catch(e => console.log("Audio:", e));
-      }
-
       if (mainBgVid) {
         mainBgVid.muted = true;
         mainBgVid.play().catch(() => {});
@@ -580,7 +577,7 @@
 
       if (envVideo) {
         envVideo.classList.add('playing');
-        envVideo.muted = false;
+        envVideo.muted = false; // Envelope sound play karega
         const playEnv = envVideo.play();
         if (playEnv !== undefined) {
           playEnv.then(() => {
@@ -595,11 +592,17 @@
     envScreen.addEventListener('click', triggerEnvelopeOpen);
     envScreen.addEventListener('touchstart', triggerEnvelopeOpen, { passive: false });
 
+    // Envelope Video ends -> Play Song & Show Card
     envVideo.addEventListener('ended', revealMainCard);
 
     function revealMainCard() {
       if (isOpened) return;
       isOpened = true;
+
+      // Envelope animation khatam hone par song play hoga
+      if (bgMusic) {
+        bgMusic.play().catch(e => console.log("Audio playback error:", e));
+      }
 
       envScreen.classList.add('hidden');
       setTimeout(() => {
