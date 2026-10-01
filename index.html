@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,7 +33,7 @@
       width: 100%;
       height: 100%;
       font-family: 'Cormorant Garamond', serif;
-      background: #110407;
+      background: #000;
       color: var(--text-white);
       overflow-x: hidden;
       scroll-behavior: smooth;
@@ -50,7 +49,7 @@
       z-index: 1;
       overflow: hidden;
       pointer-events: none;
-      background: radial-gradient(circle, #3d151e 0%, #0d0305 100%);
+      background: #000;
     }
 
     .bg-media {
@@ -70,7 +69,7 @@
       opacity: 1;
     }
 
-    /* Envelope Intro Screen */
+    /* Intro Screen / Envelope */
     #envelope-screen {
       position: fixed;
       top: 0;
@@ -169,7 +168,7 @@
 
     .hero-heart {
       font-size: 1.1rem;
-      color: var(--text-gold);
+      color: #f3e5ab;
       margin-bottom: 4px;
     }
 
@@ -177,7 +176,7 @@
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-size: 1.15rem;
-      color: var(--text-gold);
+      color: #f3e5ab;
       font-weight: 600;
       letter-spacing: 0.5px;
       margin-bottom: 12px;
@@ -188,7 +187,7 @@
       font-style: italic;
       font-size: 1rem;
       line-height: 1.3;
-      color: var(--text-white);
+      color: #fff;
       margin-bottom: 15px;
     }
 
@@ -210,14 +209,14 @@
 
     .divider-line i {
       font-size: 0.6rem;
-      color: var(--text-gold);
+      color: #f3e5ab;
     }
 
     .couple-name {
       font-family: 'Great Vibes', cursive;
       font-size: 3.8rem;
       font-weight: 400;
-      color: var(--text-gold);
+      color: #f3e5ab;
       line-height: 1;
       margin: 5px 0;
       text-shadow: 0 2px 10px rgba(0,0,0,0.8);
@@ -227,7 +226,7 @@
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-size: 1.8rem;
-      color: var(--accent-rose);
+      color: #e8c5c8;
       margin: 5px 0;
     }
 
@@ -237,7 +236,7 @@
       font-size: 0.65rem;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--text-gold);
+      color: #f3e5ab;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -257,12 +256,11 @@
     .section-title {
       font-family: 'Great Vibes', cursive;
       font-size: 2.8rem;
-      color: var(--text-gold);
+      color: #f3e5ab;
       margin-bottom: 12px;
       text-shadow: 0 2px 10px rgba(0,0,0,0.8);
     }
 
-    /* Scratch Card Section */
     .scratch-container {
       position: relative;
       width: 200px;
@@ -302,7 +300,7 @@
     .scratch-reveal-content h3 {
       font-family: 'Playfair Display', serif;
       font-size: 1.15rem;
-      color: var(--text-gold);
+      color: #f3e5ab;
       margin-bottom: 3px;
     }
 
@@ -311,7 +309,7 @@
       align-items: center;
       gap: 6px;
       background: #8b263e;
-      color: var(--text-white);
+      color: #ffffff;
       padding: 8px 18px;
       border-radius: 20px;
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -323,7 +321,6 @@
       border: none;
     }
 
-    /* Countdown Grid */
     .countdown-grid {
       display: flex;
       justify-content: center;
@@ -345,7 +342,7 @@
       font-family: 'Playfair Display', serif;
       font-size: 1.4rem;
       font-weight: 600;
-      color: var(--text-white);
+      color: #fff;
     }
 
     .countdown-label {
@@ -357,7 +354,6 @@
       margin-top: 3px;
     }
 
-    /* Event Cards & Venue */
     .event-card {
       margin-bottom: 25px;
       background: rgba(0, 0, 0, 0.65);
@@ -428,7 +424,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* Footer / Bottom Banner */
     .cta-parallax-banner {
       width: 100%;
       margin-top: 30px;
@@ -458,7 +453,7 @@
     .footer-title {
       font-family: 'Great Vibes', cursive;
       font-size: 2.8rem;
-      color: var(--text-white);
+      color: #ffffff;
       line-height: 1.2;
       margin-bottom: 12px;
     }
@@ -494,17 +489,17 @@
   <button id="audio-control" onclick="toggleAudio()">
     <i id="audio-icon" class="fas fa-music"></i>
   </button>
-  <audio id="bg-music" loop src="audio.mp3"></audio>
+  <audio id="bg-music" loop src="audio.mp3" preload="auto"></audio>
 
   <div id="bg-canvas-container">
     <video id="bg-video-main" class="bg-media active" autoplay loop muted playsinline webkit-playsinline preload="auto">
       <source src="bg.mp4" type="video/mp4">
     </video>
-    <!-- Corrected extension matching GitHub repo: bg1.jpg -->
+    <!-- Pointing directly to bg1.jpg from repository -->
     <img id="bg-img-1" class="bg-media" src="bg1.jpg" alt="Background">
   </div>
 
-  <div id="envelope-screen" onclick="playEnvelopeVideo()">
+  <div id="envelope-screen" onclick="handleEnvelopeClick()">
     <video id="envelope-video" playsinline webkit-playsinline preload="auto" muted>
       <source src="envelope.mp4" type="video/mp4">
     </video>
@@ -534,7 +529,7 @@
         <div class="scratch-container">
           <canvas id="scratch-canvas" width="200" height="180"></canvas>
           <div class="scratch-reveal-content">
-            <i class="fas fa-calendar-heart" style="font-size:1.4rem; color:var(--text-gold); margin-bottom:4px;"></i>
+            <i class="fas fa-calendar-heart" style="font-size:1.4rem; color:#f3e5ab; margin-bottom:4px;"></i>
             <h3>Nikah Ceremony</h3>
             <p style="font-size:0.95rem; font-weight:600; color:#fff;">23 October 2026</p>
             <p style="font-size:0.75rem; color:rgba(255,255,255,0.85); margin-top:2px;">Save The Date</p>
@@ -585,7 +580,7 @@
     </div>
 
     <section class="invitation-section cta-parallax-banner">
-      <!-- Corrected extension matching GitHub repo: bg2.jpg -->
+      <!-- Pointing directly to bg2.jpg from repository -->
       <img class="cta-parallax-bg" src="bg2.jpg" alt="Bottom Banner">
       <div class="cta-content-box">
         <h2 class="footer-title">We can't wait to celebrate<br>with you!</h2>
@@ -600,7 +595,7 @@
     const tapHint = document.getElementById('tap-hint-box');
     const mainContent = document.getElementById('main-content');
     const bgMusic = document.getElementById('bg-music');
-    let videoStarted = false;
+    let isOpened = false;
 
     window.addEventListener('DOMContentLoaded', () => {
       const bgVid = document.getElementById('bg-video-main');
@@ -608,26 +603,46 @@
         bgVid.muted = true;
         bgVid.play().catch(e => console.log(e));
       }
-      envVideo.pause();
-      envVideo.currentTime = 0;
       setupScrollAnimations();
     });
 
-    function playEnvelopeVideo() {
-      if (videoStarted) return;
-      videoStarted = true;
-      tapHint.style.display = 'none';
+    // Tap on Envelope
+    function handleEnvelopeClick() {
+      if (isOpened) return;
+      
+      // Play Audio safely
+      if (bgMusic) {
+        bgMusic.play().catch(e => console.log("Audio autoplay prevented:", e));
+      }
+
+      // Hide hint text
+      if (tapHint) tapHint.style.display = 'none';
+
+      // Unmute & play envelope video
       envVideo.muted = false;
       const playPromise = envVideo.play();
+
       if (playPromise !== undefined) {
-        playPromise.then(() => {}).catch(() => revealMainCard());
+        playPromise.then(() => {
+          // Fallback timer: agar video kisi wajah se finish na ho, to 2.5 sec me auto-reveal kar do
+          setTimeout(revealMainCard, 2500);
+        }).catch(err => {
+          console.log("Envelope video play error, revealing card immediately:", err);
+          revealMainCard();
+        });
+      } else {
+        setTimeout(revealMainCard, 2000);
       }
-      if (bgMusic) bgMusic.play().catch(() => {});
     }
 
+    // Video end event
     envVideo.addEventListener('ended', revealMainCard);
 
+    // Reveal main page function
     function revealMainCard() {
+      if (isOpened) return;
+      isOpened = true;
+
       envScreen.classList.add('hidden');
       setTimeout(() => {
         mainContent.classList.add('visible');
@@ -637,6 +652,7 @@
 
     function toggleAudio() {
       const icon = document.getElementById('audio-icon');
+      if (!bgMusic) return;
       if (bgMusic.paused) {
         bgMusic.play();
         icon.className = 'fas fa-music';
@@ -674,15 +690,9 @@
       if (firstSection) firstSection.classList.add('animate-in');
     }
 
-    // Scratch Card Canvas Initializer
+    // Scratch Card Logic
     const canvas = document.getElementById('scratch-canvas');
     const ctx = canvas.getContext('2d');
 
     function initRoseGoldGlitter() {
-      const grad = ctx.createRadialGradient(
-        canvas.width / 2, canvas.height / 3, 10,
-        canvas.width / 2, canvas.height / 2, 110
-      );
-      grad.addColorStop(0, '#fce4ec');
-      grad.addColorStop(0.3, '#f48fb1');
-      grad.addColorStop(0
+    
