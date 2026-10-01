@@ -31,7 +31,7 @@
 
     html, body {
       width: 100%;
-      min-height: 100vh;
+      height: 100%;
       font-family: 'Cormorant Garamond', serif;
       background: #1a1c2e;
       color: var(--text-white);
@@ -39,13 +39,13 @@
       scroll-behavior: smooth;
     }
 
-    /* Background Sky Filter */
+    /* Background Sky Filter & Video */
     #bg-video-container {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       z-index: -2;
       overflow: hidden;
       background: linear-gradient(180deg, #2b3a4a 0%, #4a4258 40%, #7d515a 70%, #a2695c 100%);
@@ -55,13 +55,12 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
+      width: 100%;
+      height: 100%;
       transform: translate(-50%, -50%);
       object-fit: cover;
       opacity: 0.85;
+      display: block;
     }
 
     /* Animated Birds */
@@ -113,20 +112,21 @@
       pointer-events: none;
     }
 
-    /* Envelope Intro Screen */
+    /* Fullscreen Envelope Intro Screen */
     #envelope-screen {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       z-index: 9999;
-      background: #141218;
+      background: #000;
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: pointer;
       transition: opacity 1.2s ease, visibility 1.2s;
+      overflow: hidden;
     }
 
     #envelope-screen.hidden {
@@ -138,7 +138,8 @@
     #envelope-video {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover; /* Black borders removal fix */
+      display: block;
     }
 
     #tap-prompt {
@@ -147,7 +148,7 @@
       left: 50%;
       transform: translateX(-50%);
       color: #fff;
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       letter-spacing: 2px;
       font-family: 'Plus Jakarta Sans', sans-serif;
       text-transform: uppercase;
@@ -158,6 +159,7 @@
       animation: pulse 2s infinite;
       pointer-events: none;
       white-space: nowrap;
+      z-index: 10000;
     }
 
     @keyframes pulse {
@@ -165,7 +167,7 @@
       50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
     }
 
-    /* Main Container */
+    /* Main Content */
     #main-content {
       position: relative;
       z-index: 10;
@@ -281,7 +283,7 @@
       text-shadow: 0 3px 12px var(--shadow-dark);
     }
 
-    /* HEART SHAPED SCRATCH CARD CONTAINER */
+    /* Scratch Card Container */
     .scratch-container {
       position: relative;
       width: 280px;
@@ -473,8 +475,8 @@
 
   <!-- Background Video Container -->
   <div id="bg-video-container">
-    <video id="bg-video" autoplay loop muted playsinline>
-      <source src="bg.mp4" type="video/mp4" />
+    <video id="bg-video" autoplay loop muted playsinline preload="auto">
+      <source src="bg.mp4" type="video/mp4">
     </video>
     <div class="bird-container"><div class="bird"></div></div>
     <div class="bird-container-2"><div class="bird"></div></div>
@@ -483,10 +485,10 @@
 
   <!-- Opening Envelope Screen -->
   <div id="envelope-screen" onclick="playEnvelopeVideo()">
-    <video id="envelope-video" playsinline preload="auto">
-      <source src="envelope.mp4" type="video/mp4" />
+    <video id="envelope-video" playsinline preload="auto" muted>
+      <source src="envelope.mp4" type="video/mp4">
     </video>
-    <div id="tap-prompt"><i class="fas fa-hand-pointer"></i> Tap Anywhere to Open</div>
+    <div id="tap-prompt"><i class="fas fa-hand-pointer"></i> TAP ANYWHERE TO OPEN</div>
   </div>
 
   <!-- Main Content Page -->
@@ -557,7 +559,7 @@
         <h3 class="event-name">Nikah Ceremony</h3>
         <p class="event-details"><i class="far fa-calendar-alt"></i> 23 October 2026</p>
         <p class="event-details"><i class="far fa-clock"></i> Evening Ceremony</p>
-        <p class="event-details" style="margin-top:8px;"><i class="fas fa-map-marker-alt"></i> Green Valley Farm House Lawn 1</p>
+        <p class="event-details" style="margin-top:8px;"><i class="fas fa-map-marker-alt"></i> Green Valley Farm House Lawn 2</p>
         <a href="https://maps.google.com" target="_blank" class="venue-btn"><i class="fas fa-directions"></i> View on Google Maps</a>
       </div>
 
@@ -589,13 +591,7 @@
   </main>
 
   <script>
-    // --- Automatic Video Fallback Check ---
     const bgVideo = document.getElementById('bg-video');
-    bgVideo.onerror = function() {
-      bgVideo.style.display = 'none';
-    };
-
-    // --- Envelope Screen Handling ---
     const envScreen = document.getElementById('envelope-screen');
     const envVideo = document.getElementById('envelope-video');
     const tapPrompt = document.getElementById('tap-prompt');
@@ -603,18 +599,23 @@
     const bgMusic = document.getElementById('bg-music');
     let videoStarted = false;
 
-    envVideo.onerror = function() {
-      revealMainCard();
-    };
+    // Mobile autoplay enforcer
+    window.addEventListener('load', () => {
+      bgVideo.play().catch(() => {});
+      envVideo.play().catch(() => {});
+    });
 
     function playEnvelopeVideo() {
       if (videoStarted) return;
       videoStarted = true;
       tapPrompt.style.display = 'none';
 
+      // Force background video and sound playback on tap
+      bgVideo.play().catch(() => {});
       if (bgMusic) bgMusic.play().catch(() => {});
 
-      envVideo.play().then(() => {}).catch(err => {
+      envVideo.muted = false;
+      envVideo.play().catch(() => {
         revealMainCard();
       });
     }
@@ -640,7 +641,7 @@
       }
     }
 
-    // --- Heart Scratch Card with Floral Pattern Canvas ---
+    // --- Heart Scratch Card Canvas ---
     const canvas = document.getElementById('scratch-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -661,11 +662,9 @@
     }
 
     function initScratchCard() {
-      // Golden Fill
       ctx.fillStyle = '#d4af37';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Draw Floral Vine Patterns over Canvas
       const flowers = [
         {x: 40, y: 50, r: 12}, {x: 240, y: 50, r: 12},
         {x: 140, y: 30, r: 10}, {x: 80, y: 110, r: 14},
@@ -678,7 +677,6 @@
         drawFlower(f.x, f.y, f.r, '#ffffff', '#8b6b23');
       });
 
-      // Text Over Flowers
       ctx.fillStyle = '#4a370e';
       ctx.font = 'bold 16px Plus Jakarta Sans';
       ctx.textAlign = 'center';
@@ -732,7 +730,6 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    // --- RSVP Submission ---
     function handleRSVP(e) {
       e.preventDefault();
       alert("Thank you for your RSVP! Your wishes have been sent to Amzad & Romana.");
