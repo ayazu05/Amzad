@@ -70,7 +70,7 @@
       opacity: 1;
     }
 
-    /* Envelope Intro Screen */
+    /* Envelope Intro Screen with Cover Image Fallback */
     #envelope-screen {
       position: fixed;
       top: 0;
@@ -78,7 +78,7 @@
       width: 100vw;
       height: 100vh;
       z-index: 9999;
-      background: #000000;
+      background: url('cover.jpg') no-repeat center center / cover;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -99,6 +99,12 @@
       object-fit: cover;
       object-position: center;
       display: block;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    #envelope-video.playing {
+      opacity: 1;
     }
 
     /* Main Content Layout */
@@ -457,7 +463,7 @@
   </div>
 
   <div id="envelope-screen">
-    <video id="envelope-video" muted playsinline webkit-playsinline preload="auto">
+    <video id="envelope-video" muted playsinline webkit-playsinline preload="auto" poster="cover.jpg">
       <source src="envelope.mp4" type="video/mp4">
     </video>
   </div>
@@ -551,45 +557,35 @@
     const mainBgVid = document.getElementById('bg-video-main');
     let isOpened = false;
 
-    // Safari Autoplay Initialization
     window.addEventListener('DOMContentLoaded', () => {
       if (mainBgVid) {
         mainBgVid.muted = true;
-        const playMain = mainBgVid.play();
-        if (playMain !== undefined) {
-          playMain.catch(() => {
-            // Safari lock handling
-          });
-        }
+        mainBgVid.play().catch(() => {});
       }
       setupScrollAnimations();
     });
 
-    // Unified Safari / iOS Touch & Click Listener
     function triggerEnvelopeOpen(e) {
       if (e) e.preventDefault();
       if (isOpened) return;
 
-      // 1. Play Background Music on User Gesture
       if (bgMusic) {
         bgMusic.play().catch(e => console.log("Audio:", e));
       }
 
-      // 2. Unlock Background Video in Safari
       if (mainBgVid) {
         mainBgVid.muted = true;
         mainBgVid.play().catch(() => {});
       }
 
-      // 3. Unmute & Play Envelope Animation Video
       if (envVideo) {
+        envVideo.classList.add('playing');
         envVideo.muted = false;
         const playEnv = envVideo.play();
         if (playEnv !== undefined) {
           playEnv.then(() => {
-            // Envelope started playing
+            // Envelope animation playing
           }).catch(() => {
-            // Fallback if video fails to play on old browsers
             revealMainCard();
           });
         }
@@ -599,7 +595,6 @@
     envScreen.addEventListener('click', triggerEnvelopeOpen);
     envScreen.addEventListener('touchstart', triggerEnvelopeOpen, { passive: false });
 
-    // Video Ends -> Open Card
     envVideo.addEventListener('ended', revealMainCard);
 
     function revealMainCard() {
