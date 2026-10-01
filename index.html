@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,7 +70,7 @@
       opacity: 1;
     }
 
-    /* Intro Screen */
+    /* Envelope Intro Screen */
     #envelope-screen {
       position: fixed;
       top: 0;
@@ -168,7 +169,7 @@
 
     .hero-heart {
       font-size: 1.1rem;
-      color: #f3e5ab;
+      color: var(--text-gold);
       margin-bottom: 4px;
     }
 
@@ -176,7 +177,7 @@
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-size: 1.15rem;
-      color: #f3e5ab;
+      color: var(--text-gold);
       font-weight: 600;
       letter-spacing: 0.5px;
       margin-bottom: 12px;
@@ -187,7 +188,7 @@
       font-style: italic;
       font-size: 1rem;
       line-height: 1.3;
-      color: #fff;
+      color: var(--text-white);
       margin-bottom: 15px;
     }
 
@@ -209,14 +210,14 @@
 
     .divider-line i {
       font-size: 0.6rem;
-      color: #f3e5ab;
+      color: var(--text-gold);
     }
 
     .couple-name {
       font-family: 'Great Vibes', cursive;
       font-size: 3.8rem;
       font-weight: 400;
-      color: #f3e5ab;
+      color: var(--text-gold);
       line-height: 1;
       margin: 5px 0;
       text-shadow: 0 2px 10px rgba(0,0,0,0.8);
@@ -226,7 +227,7 @@
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-size: 1.8rem;
-      color: #e8c5c8;
+      color: var(--accent-rose);
       margin: 5px 0;
     }
 
@@ -236,7 +237,7 @@
       font-size: 0.65rem;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: #f3e5ab;
+      color: var(--text-gold);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -256,11 +257,12 @@
     .section-title {
       font-family: 'Great Vibes', cursive;
       font-size: 2.8rem;
-      color: #f3e5ab;
+      color: var(--text-gold);
       margin-bottom: 12px;
       text-shadow: 0 2px 10px rgba(0,0,0,0.8);
     }
 
+    /* Scratch Card Section */
     .scratch-container {
       position: relative;
       width: 200px;
@@ -300,7 +302,7 @@
     .scratch-reveal-content h3 {
       font-family: 'Playfair Display', serif;
       font-size: 1.15rem;
-      color: #f3e5ab;
+      color: var(--text-gold);
       margin-bottom: 3px;
     }
 
@@ -309,7 +311,7 @@
       align-items: center;
       gap: 6px;
       background: #8b263e;
-      color: #ffffff;
+      color: var(--text-white);
       padding: 8px 18px;
       border-radius: 20px;
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -321,6 +323,7 @@
       border: none;
     }
 
+    /* Countdown Grid */
     .countdown-grid {
       display: flex;
       justify-content: center;
@@ -342,7 +345,7 @@
       font-family: 'Playfair Display', serif;
       font-size: 1.4rem;
       font-weight: 600;
-      color: #fff;
+      color: var(--text-white);
     }
 
     .countdown-label {
@@ -354,6 +357,7 @@
       margin-top: 3px;
     }
 
+    /* Event Cards & Venue */
     .event-card {
       margin-bottom: 25px;
       background: rgba(0, 0, 0, 0.65);
@@ -424,6 +428,7 @@
       letter-spacing: 0.5px;
     }
 
+    /* Footer / Bottom Banner */
     .cta-parallax-banner {
       width: 100%;
       margin-top: 30px;
@@ -453,7 +458,7 @@
     .footer-title {
       font-family: 'Great Vibes', cursive;
       font-size: 2.8rem;
-      color: #ffffff;
+      color: var(--text-white);
       line-height: 1.2;
       margin-bottom: 12px;
     }
@@ -495,7 +500,7 @@
     <video id="bg-video-main" class="bg-media active" autoplay loop muted playsinline webkit-playsinline preload="auto">
       <source src="bg.mp4" type="video/mp4">
     </video>
-    <!-- Pointing directly to bg1.jpg from repository -->
+    <!-- Corrected extension matching GitHub repo: bg1.jpg -->
     <img id="bg-img-1" class="bg-media" src="bg1.jpg" alt="Background">
   </div>
 
@@ -529,7 +534,7 @@
         <div class="scratch-container">
           <canvas id="scratch-canvas" width="200" height="180"></canvas>
           <div class="scratch-reveal-content">
-            <i class="fas fa-calendar-heart" style="font-size:1.4rem; color:#f3e5ab; margin-bottom:4px;"></i>
+            <i class="fas fa-calendar-heart" style="font-size:1.4rem; color:var(--text-gold); margin-bottom:4px;"></i>
             <h3>Nikah Ceremony</h3>
             <p style="font-size:0.95rem; font-weight:600; color:#fff;">23 October 2026</p>
             <p style="font-size:0.75rem; color:rgba(255,255,255,0.85); margin-top:2px;">Save The Date</p>
@@ -580,7 +585,7 @@
     </div>
 
     <section class="invitation-section cta-parallax-banner">
-      <!-- Pointing directly to bg2.jpg from repository -->
+      <!-- Corrected extension matching GitHub repo: bg2.jpg -->
       <img class="cta-parallax-bg" src="bg2.jpg" alt="Bottom Banner">
       <div class="cta-content-box">
         <h2 class="footer-title">We can't wait to celebrate<br>with you!</h2>
@@ -669,7 +674,7 @@
       if (firstSection) firstSection.classList.add('animate-in');
     }
 
-    // Scratch Card Logic
+    // Scratch Card Canvas Initializer
     const canvas = document.getElementById('scratch-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -680,71 +685,4 @@
       );
       grad.addColorStop(0, '#fce4ec');
       grad.addColorStop(0.3, '#f48fb1');
-      grad.addColorStop(0.7, '#c2185b');
-      grad.addColorStop(1, '#6a1b29');
-
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      const particleColors = ['#ffffff', '#fff0f5', '#f8bbd0', '#e91e63', '#d81b60', '#ffd700'];
-      for (let i = 0; i < 900; i++) {
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const size = Math.random() * 1.8 + 0.4;
-        ctx.fillStyle = particleColors[Math.floor(Math.random() * particleColors.length)];
-        ctx.globalAlpha = Math.random() * 0.9 + 0.1;
-        ctx.beginPath();
-        ctx.arc(x, y, size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      ctx.globalAlpha = 1.0;
-    }
-
-    initRoseGoldGlitter();
-
-    let isScratching = false;
-
-    function scratch(e) {
-      if (!isScratching) return;
-      const rect = canvas.getBoundingClientRect();
-      const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
-      const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
-
-      ctx.globalCompositeOperation = 'destination-out';
-      ctx.beginPath();
-      ctx.arc(x, y, 18, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    canvas.addEventListener('mousedown', () => isScratching = true);
-    canvas.addEventListener('mouseup', () => isScratching = false);
-    canvas.addEventListener('mousemove', scratch);
-    canvas.addEventListener('touchstart', () => isScratching = true);
-    canvas.addEventListener('touchend', () => isScratching = false);
-    canvas.addEventListener('touchmove', scratch);
-
-    // Live Countdown Timer
-    const weddingDate = new Date('October 23, 2026 18:00:00').getTime();
-
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = weddingDate - now;
-
-      if (distance < 0) return;
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const secs = Math.floor((distance % (1000 * 60)) / 1000);
-
-      document.getElementById('cd-days').innerText = String(days).padStart(2, '0');
-      document.getElementById('cd-hours').innerText = String(hours).padStart(2, '0');
-      document.getElementById('cd-mins').innerText = String(mins).padStart(2, '0');
-      document.getElementById('cd-secs').innerText = String(secs).padStart(2, '0');
-    }
-
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
-</body>
-</html>
+      grad.addColorStop(0
