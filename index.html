@@ -39,7 +39,7 @@
       scroll-behavior: smooth;
     }
 
-    /* Fixed Full Frame Background Videos Layer */
+    /* Fixed Canvas Background Videos Overlay */
     #bg-video-container {
       position: fixed;
       top: 0;
@@ -57,7 +57,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: fill;
+      /* Aspect ratio maintenance (No stretching, fits entire full screen) */
+      object-fit: cover;
+      object-position: center center;
       display: block;
       opacity: 0;
       transition: opacity 1.2s ease-in-out;
@@ -80,7 +82,7 @@
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      transition: opacity 1s ease, visibility 1s;
+      transition: opacity 0.8s ease, visibility 0.8s;
       overflow: hidden;
     }
 
@@ -94,14 +96,44 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center;
       display: block;
+    }
+
+    /* Tap Hint Indicator Overlay */
+    .tap-hint {
+      position: absolute;
+      bottom: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10000;
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: rgba(0,0,0,0.55);
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: 1px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: pulse 1.8s infinite;
+      pointer-events: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(0.98); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.03); }
     }
 
     /* Main Content Container */
     #main-content {
       position: relative;
       z-index: 10;
-      width: 85%;
+      width: 88%;
       max-width: 480px;
       margin: 0 auto;
       padding: 85px 10px 60px;
@@ -351,7 +383,7 @@
       line-height: 1.5;
     }
 
-    /* Venue & Map Section Styling */
+    /* Venue & Map Section (Landscape Friendly Bottom Layout) */
     .map-clean-wrapper {
       margin-bottom: 35px;
       display: flex;
@@ -379,11 +411,11 @@
 
     .map-frame {
       width: 100%;
-      height: 200px;
+      height: 210px;
       border-radius: 14px;
       border: 2px solid rgba(255, 255, 255, 0.8);
       margin-bottom: 12px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
     }
 
     .venue-btn {
@@ -408,7 +440,7 @@
     /* Closing Banner Section */
     .footer-message-section {
       margin-top: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
       padding: 10px 0;
     }
 
@@ -450,20 +482,30 @@
 </head>
 <body>
 
-  <!-- Background Music Control -->
+  <!-- Audio Toggle Button -->
   <button id="audio-control" onclick="toggleAudio()">
     <i id="audio-icon" class="fas fa-music"></i>
   </button>
   <audio id="bg-music" loop src="audio.mp3"></audio>
 
-  <!-- Multi-Video Background Layer -->
+  <!-- Multi-Video Background Layer (Dynamic Sequence Layer) -->
   <div id="bg-video-container">
-    <video id="bg-video-1" class="bg-video active" autoplay loop muted playsinline webkit-playsinline preload="auto">
+    <!-- 1. Open Envelope / Hero Card Video -->
+    <video id="bg-video-main" class="bg-video active" autoplay loop muted playsinline webkit-playsinline preload="auto">
       <source src="bg.mp4" type="video/mp4">
     </video>
+    
+    <!-- 2. Scratch Card & Countdown Video -->
+    <video id="bg-video-1" class="bg-video" autoplay loop muted playsinline webkit-playsinline preload="auto">
+      <source src="bg1.mp4" type="video/mp4">
+    </video>
+    
+    <!-- 3. Events Schedule Video -->
     <video id="bg-video-2" class="bg-video" autoplay loop muted playsinline webkit-playsinline preload="auto">
       <source src="bg2.mp4" type="video/mp4">
     </video>
+    
+    <!-- 4. Venue & Map Section Video (Landscape / Last Section) -->
     <video id="bg-video-3" class="bg-video" autoplay loop muted playsinline webkit-playsinline preload="auto">
       <source src="bg3.mp4" type="video/mp4">
     </video>
@@ -471,16 +513,19 @@
 
   <!-- Intro Envelope Screen -->
   <div id="envelope-screen" onclick="playEnvelopeVideo()">
-    <video id="envelope-video" playsinline webkit-playsinline preload="auto" muted autoplay>
+    <video id="envelope-video" playsinline webkit-playsinline preload="auto" muted>
       <source src="envelope.mp4" type="video/mp4">
     </video>
+    <div class="tap-hint" id="tap-hint-box">
+      <i class="fas fa-hand-pointer"></i> Tap to Open Invitation
+    </div>
   </div>
 
-  <!-- Main Invitation Website -->
+  <!-- Main Invitation Content -->
   <main id="main-content">
 
-    <!-- Hero Section (bg.mp4) -->
-    <section class="invitation-section" data-bg="bg-video-1">
+    <!-- 1. Hero Section (bg.mp4) -->
+    <section class="invitation-section" data-bg="bg-video-main">
       <div class="hero-heart"><i class="fas fa-heart"></i></div>
       <div class="bismillah-text">In the Name of Allah</div>
       <p class="welcome-text">We are honored to welcome you to<br>the Wedding ceremony of..</p>
@@ -499,8 +544,8 @@
       </div>
     </section>
 
-    <!-- Heart Scratch Card Section (bg2.mp4) -->
-    <section class="invitation-section" data-bg="bg-video-2">
+    <!-- 2. Scratch Card Section (bg1.mp4) -->
+    <section class="invitation-section" data-bg="bg-video-1">
       <h2 class="section-title">Scratch to Reveal</h2>
       
       <div class="scratch-container">
@@ -518,8 +563,8 @@
       </button>
     </section>
 
-    <!-- Live Countdown Timer (bg2.mp4) -->
-    <section class="invitation-section" data-bg="bg-video-2">
+    <!-- 3. Live Countdown Timer (bg1.mp4) -->
+    <section class="invitation-section" data-bg="bg-video-1">
       <h2 class="section-title" style="font-size: 2.3rem;">Counting Down to Forever</h2>
       <div class="countdown-grid">
         <div class="countdown-box">
@@ -541,7 +586,7 @@
       </div>
     </section>
 
-    <!-- Program Schedule (bg2.mp4) -->
+    <!-- 4. Events Schedule (bg2.mp4) -->
     <section class="invitation-section" data-bg="bg-video-2">
       <h2 class="section-title">Events Schedule</h2>
 
@@ -560,7 +605,7 @@
       </div>
     </section>
 
-    <!-- Map & Location Section (bg3.mp4) -->
+    <!-- 5. Venue & Location Map Section (bg3.mp4 - Landscape Bottom Video) -->
     <section class="invitation-section" data-bg="bg-video-3">
       <h2 class="section-title">Venue & Location</h2>
 
@@ -581,7 +626,7 @@
       </div>
     </section>
 
-    <!-- Closing Message Banner (bg3.mp4) -->
+    <!-- 6. Closing Message Banner (bg3.mp4) -->
     <section class="invitation-section footer-message-section" data-bg="bg-video-3">
       <h2 class="footer-title">We can't wait to celebrate<br>with you!</h2>
       <p class="footer-names">Amzad & Romana</p>
@@ -592,29 +637,40 @@
   <script>
     const envScreen = document.getElementById('envelope-screen');
     const envVideo = document.getElementById('envelope-video');
+    const tapHint = document.getElementById('tap-hint-box');
     const mainContent = document.getElementById('main-content');
     const bgMusic = document.getElementById('bg-music');
     let videoStarted = false;
 
-    // Pre-play Background Videos
+    // Load All Background Videos Silently
     window.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.bg-video').forEach(v => {
         v.muted = true;
         v.play().catch(e => console.log(e));
       });
-      envVideo.play().catch(e => console.log(e));
+      
+      // Pause Envelope Video until tap
+      envVideo.pause();
+      envVideo.currentTime = 0;
       setupScrollAnimations();
     });
 
-    // User tap handler on envelope intro screen
+    // Tap to open Envelope Handlers
     function playEnvelopeVideo() {
       if (videoStarted) return;
       videoStarted = true;
 
+      tapHint.style.display = 'none';
       envVideo.muted = false;
-      envVideo.play().catch(() => {
-        revealMainCard();
-      });
+      
+      const playPromise = envVideo.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          // Video playing smoothly
+        }).catch(() => {
+          revealMainCard();
+        });
+      }
 
       if (bgMusic) bgMusic.play().catch(() => {});
     }
@@ -640,14 +696,13 @@
       }
     }
 
-    // --- Dynamic Background Video Switcher on Scroll ---
+    // Dynamic Scroll Background Switcher
     function setupScrollAnimations() {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('animate-in');
 
-            // Switch Background Video based on active section data-bg
             const targetBgId = entry.target.getAttribute('data-bg');
             if (targetBgId) {
               switchBgVideo(targetBgId);
@@ -676,7 +731,7 @@
       if (firstSection) firstSection.classList.add('animate-in');
     }
 
-    // --- Rose Gold Glitter Heart Canvas ---
+    // Rose Gold Scratch Canvas
     const canvas = document.getElementById('scratch-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -731,7 +786,7 @@
     canvas.addEventListener('touchend', () => isScratching = false);
     canvas.addEventListener('touchmove', scratch);
 
-    // --- Countdown Timer ---
+    // Live Countdown Timer (23 Oct 2026)
     const weddingDate = new Date('October 23, 2026 18:00:00').getTime();
 
     function updateCountdown() {
