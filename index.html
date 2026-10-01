@@ -92,7 +92,7 @@
     #main-content {
       position: relative;
       z-index: 10;
-      width: 82%;
+      width: 85%;
       max-width: 480px;
       margin: 0 auto;
       padding: 85px 10px 60px;
@@ -101,19 +101,26 @@
       align-items: center;
       text-align: center;
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 1.2s ease, transform 1.2s ease;
+      transition: opacity 1s ease;
     }
 
     #main-content.visible {
       opacity: 1;
-      transform: translateY(0);
     }
 
+    /* Slide Animation Classes */
     .invitation-section {
       width: 100%;
-      margin-bottom: 45px;
+      margin-bottom: 50px;
       position: relative;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .invitation-section.animate-in {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .hero-heart {
@@ -125,11 +132,12 @@
     .bismillah-text {
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: 1.1rem;
-      font-weight: 600;
+      font-size: 1.15rem;
       color: #2b2b2b;
+      font-weight: 600;
+      letter-spacing: 0.5px;
       margin-bottom: 12px;
-      text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+      text-shadow: 0 1px 3px rgba(255,255,255,0.9);
     }
 
     .welcome-text {
@@ -310,7 +318,7 @@
       margin-top: 3px;
     }
 
-    /* Events */
+    /* Events Card */
     .event-card {
       margin-bottom: 25px;
       background: rgba(0, 0, 0, 0.5);
@@ -334,9 +342,42 @@
       line-height: 1.5;
     }
 
+    /* Map Card Bottom Section */
+    .map-card {
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 18px 12px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .map-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--text-gold);
+      margin-bottom: 4px;
+    }
+
+    .map-address {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 12px;
+    }
+
+    .map-frame {
+      width: 100%;
+      height: 180px;
+      border-radius: 10px;
+      border: 0;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+
     .venue-btn {
       display: inline-block;
-      margin-top: 12px;
       padding: 8px 18px;
       background: rgba(255, 255, 255, 0.2);
       color: #fff;
@@ -352,45 +393,6 @@
     .venue-btn:hover {
       background: #fff;
       color: #000;
-    }
-
-    /* RSVP Form */
-    .rsvp-form {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .form-input, .form-select, .form-textarea {
-      width: 100%;
-      padding: 12px 14px;
-      background: rgba(0, 0, 0, 0.55);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 8px;
-      color: #fff;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.85rem;
-      outline: none;
-    }
-
-    .form-input::placeholder, .form-textarea::placeholder {
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    .submit-btn {
-      padding: 12px;
-      background: linear-gradient(135deg, #c5a059 0%, #9e7d3b 100%);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
 
     #audio-control {
@@ -500,17 +502,15 @@
       </div>
     </section>
 
-    <!-- Program Timeline & Venues -->
+    <!-- Program Timeline -->
     <section class="invitation-section">
-      <h2 class="section-title">Events & Venue</h2>
+      <h2 class="section-title">Events Schedule</h2>
 
       <!-- Nikah Event -->
       <div class="event-card">
         <h3 class="event-name">Nikah Ceremony</h3>
         <p class="event-details"><i class="far fa-calendar-alt"></i> 23 October 2026</p>
         <p class="event-details"><i class="far fa-clock"></i> Evening Ceremony</p>
-        <p class="event-details" style="margin-top:6px;"><i class="fas fa-map-marker-alt"></i> Green Valley Farm House Lawn 2</p>
-        <a href="https://maps.app.goo.gl/bdSiVDtXaefyujwc6" target="_blank" class="venue-btn"><i class="fas fa-directions"></i> View on Google Maps</a>
       </div>
 
       <!-- Walima Event -->
@@ -518,24 +518,28 @@
         <h3 class="event-name">Walima Reception</h3>
         <p class="event-details"><i class="far fa-calendar-alt"></i> 25 October 2026</p>
         <p class="event-details"><i class="far fa-clock"></i> 1:11 PM onwards</p>
-        <p class="event-details" style="margin-top:6px;"><i class="fas fa-map-marker-alt"></i> Kaka Palace</p>
-        <a href="https://maps.app.goo.gl/Z5xe5ZYy6UYGVZN88" target="_blank" class="venue-btn"><i class="fas fa-directions"></i> View on Google Maps</a>
       </div>
     </section>
 
-    <!-- RSVP Section -->
+    <!-- LAST SECTION: Location & Google Maps -->
     <section class="invitation-section">
-      <h2 class="section-title">RSVP</h2>
-      <form class="rsvp-form" onsubmit="handleRSVP(event)">
-        <input type="text" class="form-input" placeholder="Your Full Name" required />
-        <select class="form-select" required>
-          <option value="" disabled selected>Will you be attending?</option>
-          <option value="yes">Joyfully Accepts</option>
-          <option value="no">Regretfully Declines</option>
-        </select>
-        <textarea class="form-textarea" rows="3" placeholder="Write your warm wishes for Amzad & Romana..."></textarea>
-        <button type="submit" class="submit-btn">SEND MESSAGE</button>
-      </form>
+      <h2 class="section-title">Venue & Location</h2>
+
+      <!-- Green Valley Farm House Lawn 2 -->
+      <div class="map-card">
+        <h3 class="map-title">Green Valley Farm House Lawn 2</h3>
+        <p class="map-address"><i class="fas fa-map-marker-alt"></i> Venue for Nikah Ceremony</p>
+        <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500!2d0!3d0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMDAnMDAuMCJOIDDCsDAwJzAwLjAiRQ!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+        <a href="https://maps.app.goo.gl/bdSiVDtXaefyujwc6" target="_blank" class="venue-btn"><i class="fas fa-directions"></i> Open in Google Maps</a>
+      </div>
+
+      <!-- Kaka Palace -->
+      <div class="map-card">
+        <h3 class="map-title">Kaka Palace</h3>
+        <p class="map-address"><i class="fas fa-map-marker-alt"></i> Venue for Walima Reception</p>
+        <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500!2d0!3d0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMDAnMDAuMCJOIDDCsDAwJzAwLjAiRQ!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+        <a href="https://maps.app.goo.gl/Z5xe5ZYy6UYGVZN88" target="_blank" class="venue-btn"><i class="fas fa-directions"></i> Open in Google Maps</a>
+      </div>
     </section>
 
   </main>
@@ -552,6 +556,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       bgVideo.muted = true;
       bgVideo.play().catch(e => console.log('Autoplay deferred:', e));
+      setupScrollAnimations();
     });
 
     // User click handler on envelope slide
@@ -576,6 +581,7 @@
       envScreen.classList.add('hidden');
       setTimeout(() => {
         mainContent.classList.add('visible');
+        triggerInitialAnimations();
       }, 300);
     }
 
@@ -588,6 +594,26 @@
         bgMusic.pause();
         icon.className = 'fas fa-volume-mute';
       }
+    }
+
+    // --- Slide Animations on Scroll ---
+    function setupScrollAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+          }
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll('.invitation-section').forEach(section => {
+        observer.observe(section);
+      });
+    }
+
+    function triggerInitialAnimations() {
+      const firstSection = document.querySelector('.invitation-section');
+      if (firstSection) firstSection.classList.add('animate-in');
     }
 
     // --- Rose Gold Glitter Heart Canvas ---
@@ -667,12 +693,6 @@
 
     setInterval(updateCountdown, 1000);
     updateCountdown();
-
-    function handleRSVP(e) {
-      e.preventDefault();
-      alert("Thank you for your RSVP! Your wishes have been sent to Amzad & Romana.");
-      e.target.reset();
-    }
   </script>
 </body>
 </html>
