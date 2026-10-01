@@ -38,7 +38,7 @@
       scroll-behavior: smooth;
     }
 
-    /* Fixed Background Layer */
+    /* Fixed Canvas Background Layer */
     #bg-canvas-container {
       position: fixed;
       top: 0;
@@ -67,6 +67,65 @@
       opacity: 1;
     }
 
+    /* Envelope Intro Screen */
+    #envelope-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      background: #000000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: opacity 0.8s ease, visibility 0.8s;
+      overflow: hidden;
+    }
+
+    #envelope-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    #envelope-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .tap-hint {
+      position: absolute;
+      bottom: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10000;
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: rgba(0,0,0,0.65);
+      padding: 8px 18px;
+      border-radius: 25px;
+      border: 1px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: pulse 1.8s infinite;
+      pointer-events: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(0.98); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.03); }
+    }
+
     /* Main Content Layout */
     #main-content {
       position: relative;
@@ -78,6 +137,11 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    #main-content.visible {
       opacity: 1;
     }
 
@@ -291,7 +355,7 @@
       font-weight: 600;
     }
 
-    /* Clean Direct Map Section Without White Side Borders */
+    /* Clean Direct Map Section */
     .map-clean-wrapper {
       margin-bottom: 20px;
       display: flex;
@@ -337,12 +401,27 @@
       font-weight: 600;
     }
 
+    /* Restored Parallax CTA Banner with bg2.jpg */
     .cta-parallax-banner {
       width: 100%;
-      margin-top: 25px;
+      margin-top: 30px;
       margin-bottom: 0 !important;
-      padding: 40px 15px;
+      padding: 60px 15px;
       position: relative;
+      background: #100406;
+      overflow: hidden;
+    }
+
+    .cta-parallax-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 1;
+      opacity: 0.5;
     }
 
     .cta-content-box {
@@ -352,11 +431,12 @@
 
     .footer-title {
       font-family: 'Great Vibes', cursive;
-      font-size: 2.5rem;
+      font-size: 2.6rem;
       color: var(--text-black);
       line-height: 1.2;
       margin-bottom: 8px;
       font-weight: 600;
+      text-shadow: 0 1px 3px rgba(255,255,255,0.8);
     }
 
     .footer-names {
@@ -364,6 +444,7 @@
       font-size: 2.2rem;
       color: var(--text-burgundy);
       font-weight: 600;
+      text-shadow: 0 1px 3px rgba(255,255,255,0.8);
     }
 
     #audio-control {
@@ -400,9 +481,18 @@
     <img id="bg-img-1" class="bg-media" src="bg1.jpg" alt="Background">
   </div>
 
+  <div id="envelope-screen" onclick="handleEnvelopeClick()">
+    <video id="envelope-video" playsinline webkit-playsinline preload="auto" muted>
+      <source src="envelope.mp4" type="video/mp4">
+    </video>
+    <div class="tap-hint" id="tap-hint-box">
+      <i class="fas fa-hand-pointer"></i> Tap to Open Invitation
+    </div>
+  </div>
+
   <main id="main-content">
     <div class="content-wrapper">
-      <section class="invitation-section animate-in" data-bg="bg-video-main">
+      <section class="invitation-section" data-bg="bg-video-main">
         <div class="hero-heart"><i class="fas fa-heart"></i></div>
         <div class="bismillah-text">In the Name of Allah</div>
         <p class="welcome-text">We are honored to welcome you to<br>the Wedding ceremony of..</p>
@@ -472,7 +562,9 @@
       </section>
     </div>
 
+    <!-- Restored Parallax CTA Section with bg2.jpg -->
     <section class="invitation-section cta-parallax-banner">
+      <img class="cta-parallax-bg" src="bg2.jpg" alt="Bottom Banner Parallax">
       <div class="cta-content-box">
         <h2 class="footer-title">We can't wait to celebrate<br>with you!</h2>
         <p class="footer-names">Amzad & Romana</p>
@@ -481,8 +573,13 @@
   </main>
 
   <script>
+    const envScreen = document.getElementById('envelope-screen');
+    const envVideo = document.getElementById('envelope-video');
+    const tapHint = document.getElementById('tap-hint-box');
+    const mainContent = document.getElementById('main-content');
     const bgMusic = document.getElementById('bg-music');
     const mainBgVid = document.getElementById('bg-video-main');
+    let isOpened = false;
 
     window.addEventListener('DOMContentLoaded', () => {
       if (mainBgVid) {
@@ -492,12 +589,47 @@
       setupScrollAnimations();
     });
 
-    // Start music on first tap anywhere
-    document.addEventListener('click', () => {
-      if (bgMusic && bgMusic.paused) {
-        bgMusic.play().catch(e => console.log(e));
+    function handleEnvelopeClick() {
+      if (isOpened) return;
+
+      if (bgMusic) {
+        bgMusic.play().catch(e => console.log("Audio playback:", e));
       }
-    }, { once: true });
+
+      if (tapHint) tapHint.style.display = 'none';
+
+      envVideo.muted = false;
+      const playPromise = envVideo.play();
+
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          setTimeout(revealMainCard, 1000);
+        }).catch(err => {
+          revealMainCard();
+        });
+      } else {
+        revealMainCard();
+      }
+
+      setTimeout(revealMainCard, 1200);
+    }
+
+    envVideo.addEventListener('ended', revealMainCard);
+
+    function revealMainCard() {
+      if (isOpened) return;
+      isOpened = true;
+
+      envScreen.classList.add('hidden');
+      setTimeout(() => {
+        mainContent.classList.add('visible');
+        triggerInitialAnimations();
+        if (mainBgVid) {
+          mainBgVid.currentTime = 0;
+          mainBgVid.play().catch(() => {});
+        }
+      }, 200);
+    }
 
     function toggleAudio() {
       const icon = document.getElementById('audio-icon');
@@ -538,6 +670,11 @@
           media.classList.remove('active');
         }
       });
+    }
+
+    function triggerInitialAnimations() {
+      const firstSection = document.querySelector('.invitation-section');
+      if (firstSection) firstSection.classList.add('animate-in');
     }
 
     // Scratch Card Logic
