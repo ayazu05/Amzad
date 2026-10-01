@@ -18,7 +18,7 @@
       --text-gold: #f3e5ab;
       --text-white: #ffffff;
       --accent-rose: #e8c5c8;
-      --shadow-dark: rgba(0, 0, 0, 0.75);
+      --shadow-dark: rgba(0, 0, 0, 0.65);
     }
 
     * {
@@ -33,13 +33,13 @@
       width: 100%;
       min-height: 100vh;
       font-family: 'Cormorant Garamond', serif;
-      background-color: #0b0c10;
+      background: #1a1c2e;
       color: var(--text-white);
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
 
-    /* Background Fullscreen Video Fix */
+    /* Animated Sunset Sky Background (Fallback + Live Theme) */
     #bg-video-container {
       position: fixed;
       top: 0;
@@ -48,7 +48,8 @@
       height: 100vh;
       z-index: -2;
       overflow: hidden;
-      background: #0b0c10;
+      background: linear-gradient(180deg, #2b3a4a 0%, #4a4258 40%, #7d515a 70%, #a2695c 100%);
+      background-size: 100% 100%;
     }
 
     #bg-video {
@@ -61,10 +62,48 @@
       height: auto;
       transform: translate(-50%, -50%);
       object-fit: cover;
-      filter: brightness(0.9) contrast(1.05);
+      opacity: 0.85;
     }
 
-    /* Subtle Overlay for Text Contrast */
+    /* Flying Birds Animation Background */
+    .bird {
+      background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/17447/bird-cells-new.svg');
+      background-repeat: repeat-x;
+      background-size: 88px 125px;
+      width: 88px;
+      height: 125px;
+      position: absolute;
+      z-index: -1;
+      opacity: 0.3;
+      animation: fly-cycle 1s steps(10) infinite;
+    }
+
+    .bird-container {
+      position: absolute;
+      top: 15%;
+      left: -10%;
+      transform: scale(0.3) translateY(0px);
+      animation: fly-right 12s linear infinite;
+    }
+
+    .bird-container-2 {
+      top: 25%;
+      left: -20%;
+      transform: scale(0.2) translateY(0px);
+      animation: fly-right 18s linear infinite 4s;
+    }
+
+    @keyframes fly-cycle {
+      100% { background-position: -900px 0; }
+    }
+
+    @keyframes fly-right {
+      0% { left: -10%; transform: scale(0.3) translateY(0px); }
+      50% { transform: scale(0.3) translateY(-20px); }
+      100% { left: 110%; transform: scale(0.3) translateY(0px); }
+    }
+
+    /* Subtle Dark Vignette for Text Contrast */
     #bg-overlay {
       position: fixed;
       top: 0;
@@ -72,7 +111,7 @@
       width: 100vw;
       height: 100vh;
       z-index: -1;
-      background: rgba(0, 0, 0, 0.35);
+      background: radial-gradient(circle at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.45) 100%);
       pointer-events: none;
     }
 
@@ -84,12 +123,12 @@
       width: 100vw;
       height: 100vh;
       z-index: 9999;
-      background: #000;
+      background: #141218;
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
+      transition: opacity 1.2s ease, visibility 1.2s;
     }
 
     #envelope-screen.hidden {
@@ -110,7 +149,7 @@
       left: 50%;
       transform: translateX(-50%);
       color: #fff;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       letter-spacing: 2px;
       font-family: 'Plus Jakarta Sans', sans-serif;
       text-transform: uppercase;
@@ -120,6 +159,7 @@
       border: 1px solid rgba(255,255,255,0.25);
       animation: pulse 2s infinite;
       pointer-events: none;
+      white-space: nowrap;
     }
 
     @keyframes pulse {
@@ -149,14 +189,13 @@
       transform: translateY(0);
     }
 
-    /* Section Styling - Completely Transparent */
     .invitation-section {
       width: 100%;
       margin-bottom: 75px;
       position: relative;
     }
 
-    /* Hero Section */
+    /* Hero Section - Boxless Sunset Style */
     .hero-heart {
       font-size: 1.4rem;
       color: #ffffff;
@@ -202,7 +241,7 @@
       color: #ffffff;
       line-height: 1.1;
       margin: 10px 0;
-      text-shadow: 0 4px 15px rgba(0,0,0,0.9), 0 0 30px rgba(255,255,255,0.3);
+      text-shadow: 0 4px 15px rgba(0,0,0,0.8), 0 0 25px rgba(255,255,255,0.3);
     }
 
     .ampersand {
@@ -257,7 +296,7 @@
       60% { transform: translateY(4px); }
     }
 
-    /* Section Headings */
+    /* Headings */
     .section-title {
       font-family: 'Great Vibes', cursive;
       font-size: 3.6rem;
@@ -283,6 +322,7 @@
       z-index: 2;
       cursor: pointer;
       touch-action: none;
+      border-radius: 20px;
     }
 
     .scratch-reveal-content {
@@ -296,7 +336,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: rgba(20, 15, 25, 0.75);
+      background: rgba(20, 15, 25, 0.65);
       backdrop-filter: blur(8px);
       border-radius: 20px;
       border: 1px solid rgba(255,255,255,0.2);
@@ -311,7 +351,7 @@
       margin-bottom: 5px;
     }
 
-    /* Countdown Timer Section */
+    /* Countdown Section */
     .countdown-grid {
       display: flex;
       justify-content: center;
@@ -320,13 +360,13 @@
     }
 
     .countdown-box {
-      background: rgba(0, 0, 0, 0.45);
+      background: rgba(0, 0, 0, 0.35);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 12px;
       padding: 15px 12px;
       min-width: 72px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     }
 
     .countdown-value {
@@ -345,10 +385,10 @@
       margin-top: 4px;
     }
 
-    /* Events Cards */
+    /* Event Cards */
     .event-card {
       margin-bottom: 35px;
-      background: rgba(0, 0, 0, 0.35);
+      background: rgba(0, 0, 0, 0.3);
       backdrop-filter: blur(8px);
       padding: 25px 20px;
       border-radius: 16px;
@@ -402,7 +442,7 @@
     .form-input, .form-select, .form-textarea {
       width: 100%;
       padding: 14px 18px;
-      background: rgba(0, 0, 0, 0.45);
+      background: rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.25);
       border-radius: 10px;
@@ -430,7 +470,6 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
 
-    /* Audio Toggle Button */
     #audio-control {
       position: fixed;
       top: 20px;
@@ -456,20 +495,22 @@
   <button id="audio-control" onclick="toggleAudio()">
     <i id="audio-icon" class="fas fa-music"></i>
   </button>
-  <audio id="bg-music" loop src="./audio.mp3"></audio>
+  <audio id="bg-music" loop src="audio.mp3"></audio>
 
-  <!-- Background Fullscreen Video -->
+  <!-- Background Container with Flying Birds -->
   <div id="bg-video-container">
-    <video id="bg-video" autoplay loop muted playsinline preload="auto">
-      <source src="./bg.mp4" type="video/mp4" />
+    <video id="bg-video" autoplay loop muted playsinline>
+      <source src="bg.mp4" type="video/mp4" />
     </video>
+    <div class="bird-container"><div class="bird"></div></div>
+    <div class="bird-container-2"><div class="bird"></div></div>
   </div>
   <div id="bg-overlay"></div>
 
-  <!-- Opening Envelope Screen (Video) -->
+  <!-- Opening Envelope Screen -->
   <div id="envelope-screen" onclick="playEnvelopeVideo()">
     <video id="envelope-video" playsinline preload="auto">
-      <source src="./envelope.mp4" type="video/mp4" />
+      <source src="envelope.mp4" type="video/mp4" />
     </video>
     <div id="tap-prompt"><i class="fas fa-hand-pointer"></i> Tap Anywhere to Open</div>
   </div>
@@ -578,14 +619,11 @@
   </main>
 
   <script>
-    // --- Force Play Background Video ---
-    window.addEventListener('DOMContentLoaded', () => {
-      const bgVideo = document.getElementById('bg-video');
-      if (bgVideo) {
-        bgVideo.muted = true;
-        bgVideo.play().catch(e => console.log("Bg autoplay retry:", e));
-      }
-    });
+    // --- Automatic Video Fallback Check ---
+    const bgVideo = document.getElementById('bg-video');
+    bgVideo.onerror = function() {
+      bgVideo.style.display = 'none';
+    };
 
     // --- Envelope Screen Handling ---
     const envScreen = document.getElementById('envelope-screen');
@@ -595,18 +633,22 @@
     const bgMusic = document.getElementById('bg-music');
     let videoStarted = false;
 
+    // Handle video load error gracefully
+    envVideo.onerror = function() {
+      revealMainCard();
+    };
+
     function playEnvelopeVideo() {
       if (videoStarted) return;
       videoStarted = true;
       tapPrompt.style.display = 'none';
 
-      // Play background audio
-      if (bgMusic) {
-        bgMusic.play().catch(() => {});
-      }
+      if (bgMusic) bgMusic.play().catch(() => {});
 
-      envVideo.play().catch(err => {
-        console.log("Intro video skip:", err);
+      envVideo.play().then(() => {
+        // Playing
+      }).catch(err => {
+        console.log("Video fail, auto opening:", err);
         revealMainCard();
       });
     }
@@ -640,7 +682,7 @@
       ctx.fillStyle = '#d4af37';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
-      ctx.fillStyle = '#8b6b23';
+      ctx.fillStyle = '#6b5015';
       ctx.font = '16px Plus Jakarta Sans';
       ctx.textAlign = 'center';
       ctx.fillText('Scratch Here', canvas.width / 2, canvas.height / 2);
