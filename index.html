@@ -132,7 +132,7 @@
       z-index: 10;
       width: 100%;
       margin: 0 auto;
-      padding-top: 75px; /* Heart icon thoda neeche shift kar diya */
+      padding-top: 75px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -175,7 +175,7 @@
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-size: 1.2rem;
-      color: var(--text-black); /* Solid Black Color */
+      color: var(--text-black);
       font-weight: 700;
       letter-spacing: 0.5px;
       margin-bottom: 6px;
@@ -492,6 +492,7 @@
 
   <main id="main-content">
     <div class="content-wrapper">
+      <!-- Section 1: bg.mp4 -->
       <section class="invitation-section" data-bg="bg-video-main">
         <div class="hero-heart"><i class="fas fa-heart"></i></div>
         <div class="bismillah-text">In the Name of Allah</div>
@@ -507,7 +508,8 @@
         </div>
       </section>
 
-      <section class="invitation-section" data-bg="bg-img-1">
+      <!-- Section 2: bg.mp4 -->
+      <section class="invitation-section" data-bg="bg-video-main">
         <h2 class="section-title">Scratch to Reveal</h2>
         <div class="scratch-container">
           <canvas id="scratch-canvas" width="180" height="160"></canvas>
@@ -521,7 +523,8 @@
         <button class="save-the-date-btn"><i class="far fa-calendar-plus"></i> SAVE THE DATE</button>
       </section>
 
-      <section class="invitation-section" data-bg="bg-img-1">
+      <!-- Section 3: bg.mp4 -->
+      <section class="invitation-section" data-bg="bg-video-main">
         <h2 class="section-title" style="font-size: 2rem;">Counting Down to Forever</h2>
         <div class="countdown-grid">
           <div class="countdown-box"><div id="cd-days" class="countdown-value">00</div><div class="countdown-label">Days</div></div>
@@ -531,7 +534,8 @@
         </div>
       </section>
 
-      <section class="invitation-section" data-bg="bg-img-1">
+      <!-- Section 4 (Event Schedule): bg.mp4 tak rhega -->
+      <section class="invitation-section" data-bg="bg-video-main">
         <h2 class="section-title">Events Schedule</h2>
         <div class="event-card">
           <h3 class="event-name">Nikah Ceremony</h3>
@@ -545,6 +549,7 @@
         </div>
       </section>
 
+      <!-- Section 5 (Venue & Location): Yahan se bg1.jpg par change hoga -->
       <section class="invitation-section" data-bg="bg-img-1">
         <h2 class="section-title">Venue & Location</h2>
         <div class="map-clean-wrapper">
@@ -642,7 +647,6 @@
       }
     }
 
-    // Smooth Scroll - Threshold set to 0.5 so it changes only after scrolling half page
     function setupScrollAnimations() {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -652,7 +656,7 @@
             if (targetBgId) switchBgMedia(targetBgId);
           }
         });
-      }, { threshold: 0.5 });
+      }, { threshold: 0.3 });
 
       document.querySelectorAll('.invitation-section').forEach(section => {
         observer.observe(section);
