@@ -126,13 +126,13 @@
       50% { opacity: 1; transform: translateX(-50%) scale(1.03); }
     }
 
-    /* Main Content Layout */
+    /* Main Content Layout with Top Padding Shift */
     #main-content {
       position: relative;
       z-index: 10;
       width: 100%;
       margin: 0 auto;
-      padding-top: 35px;
+      padding-top: 75px; /* Heart icon thoda neeche shift kar diya */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -166,16 +166,16 @@
     }
 
     .hero-heart {
-      font-size: 1rem;
+      font-size: 1.1rem;
       color: var(--text-burgundy);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .bismillah-text {
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: 1.15rem;
-      color: var(--text-burgundy);
+      font-size: 1.2rem;
+      color: var(--text-black); /* Solid Black Color */
       font-weight: 700;
       letter-spacing: 0.5px;
       margin-bottom: 6px;
@@ -401,7 +401,7 @@
       font-weight: 600;
     }
 
-    /* Restored Parallax CTA Banner with bg2.jpg */
+    /* Parallax CTA Banner with bg2.jpg */
     .cta-parallax-banner {
       width: 100%;
       margin-top: 30px;
@@ -562,7 +562,6 @@
       </section>
     </div>
 
-    <!-- Restored Parallax CTA Section with bg2.jpg -->
     <section class="invitation-section cta-parallax-banner">
       <img class="cta-parallax-bg" src="bg2.jpg" alt="Bottom Banner Parallax">
       <div class="cta-content-box">
@@ -643,6 +642,7 @@
       }
     }
 
+    // Smooth Scroll - Threshold set to 0.5 so it changes only after scrolling half page
     function setupScrollAnimations() {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -652,7 +652,7 @@
             if (targetBgId) switchBgMedia(targetBgId);
           }
         });
-      }, { threshold: 0.15 });
+      }, { threshold: 0.5 });
 
       document.querySelectorAll('.invitation-section').forEach(section => {
         observer.observe(section);
