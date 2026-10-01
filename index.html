@@ -39,7 +39,7 @@
       scroll-behavior: smooth;
     }
 
-    /* Animated Sunset Sky Background (Fallback + Live Theme) */
+    /* Background Sky Filter */
     #bg-video-container {
       position: fixed;
       top: 0;
@@ -49,7 +49,6 @@
       z-index: -2;
       overflow: hidden;
       background: linear-gradient(180deg, #2b3a4a 0%, #4a4258 40%, #7d515a 70%, #a2695c 100%);
-      background-size: 100% 100%;
     }
 
     #bg-video {
@@ -65,7 +64,7 @@
       opacity: 0.85;
     }
 
-    /* Flying Birds Animation Background */
+    /* Animated Birds */
     .bird {
       background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/17447/bird-cells-new.svg');
       background-repeat: repeat-x;
@@ -103,7 +102,6 @@
       100% { left: 110%; transform: scale(0.3) translateY(0px); }
     }
 
-    /* Subtle Dark Vignette for Text Contrast */
     #bg-overlay {
       position: fixed;
       top: 0;
@@ -115,7 +113,7 @@
       pointer-events: none;
     }
 
-    /* --- Envelope Intro Video Screen --- */
+    /* Envelope Intro Screen */
     #envelope-screen {
       position: fixed;
       top: 0;
@@ -167,7 +165,7 @@
       50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
     }
 
-    /* Main Content Wrapper */
+    /* Main Container */
     #main-content {
       position: relative;
       z-index: 10;
@@ -195,7 +193,6 @@
       position: relative;
     }
 
-    /* Hero Section - Boxless Sunset Style */
     .hero-heart {
       font-size: 1.4rem;
       color: #ffffff;
@@ -296,7 +293,6 @@
       60% { transform: translateY(4px); }
     }
 
-    /* Headings */
     .section-title {
       font-family: 'Great Vibes', cursive;
       font-size: 3.6rem;
@@ -305,12 +301,13 @@
       text-shadow: 0 3px 12px var(--shadow-dark);
     }
 
-    /* Scratch Card Section */
+    /* HEART SHAPED SCRATCH CARD CONTAINER */
     .scratch-container {
       position: relative;
-      width: 260px;
-      height: 240px;
+      width: 280px;
+      height: 260px;
       margin: 20px auto;
+      clip-path: path('M 140 250 C 140 250 10 160 10 85 C 10 35 45 10 85 10 C 115 10 132 28 140 42 C 148 28 165 10 195 10 C 235 10 270 35 270 85 C 270 160 140 250 140 250 Z');
     }
 
     #scratch-canvas {
@@ -322,7 +319,6 @@
       z-index: 2;
       cursor: pointer;
       touch-action: none;
-      border-radius: 20px;
     }
 
     .scratch-reveal-content {
@@ -336,10 +332,8 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: rgba(20, 15, 25, 0.65);
+      background: rgba(20, 15, 25, 0.85);
       backdrop-filter: blur(8px);
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.2);
       padding: 20px;
       text-shadow: 0 2px 6px var(--shadow-dark);
     }
@@ -385,7 +379,7 @@
       margin-top: 4px;
     }
 
-    /* Event Cards */
+    /* Events */
     .event-card {
       margin-bottom: 35px;
       background: rgba(0, 0, 0, 0.3);
@@ -497,7 +491,7 @@
   </button>
   <audio id="bg-music" loop src="audio.mp3"></audio>
 
-  <!-- Background Container with Flying Birds -->
+  <!-- Background Video Container -->
   <div id="bg-video-container">
     <video id="bg-video" autoplay loop muted playsinline>
       <source src="bg.mp4" type="video/mp4" />
@@ -541,11 +535,11 @@
       </div>
     </section>
 
-    <!-- Scratch Card Section -->
+    <!-- Heart-shaped Scratch Card Section -->
     <section class="invitation-section">
       <h2 class="section-title">Scratch to Reveal</h2>
       <div class="scratch-container">
-        <canvas id="scratch-canvas" width="260" height="240"></canvas>
+        <canvas id="scratch-canvas" width="280" height="260"></canvas>
         <div class="scratch-reveal-content">
           <i class="fas fa-calendar-heart" style="font-size:2rem; color:#f3e5ab; margin-bottom:8px;"></i>
           <h3>Nikah Ceremony</h3>
@@ -633,7 +627,6 @@
     const bgMusic = document.getElementById('bg-music');
     let videoStarted = false;
 
-    // Handle video load error gracefully
     envVideo.onerror = function() {
       revealMainCard();
     };
@@ -645,10 +638,7 @@
 
       if (bgMusic) bgMusic.play().catch(() => {});
 
-      envVideo.play().then(() => {
-        // Playing
-      }).catch(err => {
-        console.log("Video fail, auto opening:", err);
+      envVideo.play().then(() => {}).catch(err => {
         revealMainCard();
       });
     }
@@ -674,18 +664,49 @@
       }
     }
 
-    // --- Scratch Card Logic ---
+    // --- Heart Scratch Card with Floral Pattern Canvas ---
     const canvas = document.getElementById('scratch-canvas');
     const ctx = canvas.getContext('2d');
 
+    function drawFlower(cx, cy, radius, petColor, centerColor) {
+      ctx.fillStyle = petColor;
+      for (let i = 0; i < 6; i++) {
+        const angle = (i * Math.PI) / 3;
+        const px = cx + Math.cos(angle) * (radius * 0.75);
+        const py = cy + Math.sin(angle) * (radius * 0.75);
+        ctx.beginPath();
+        ctx.arc(px, py, radius * 0.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.fillStyle = centerColor;
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius * 0.4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
     function initScratchCard() {
+      // Golden Floral Background Fill
       ctx.fillStyle = '#d4af37';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      ctx.fillStyle = '#6b5015';
-      ctx.font = '16px Plus Jakarta Sans';
+
+      // Draw Floral Vine Patterns over Canvas
+      const flowers = [
+        {x: 40, y: 50, r: 12}, {x: 240, y: 50, r: 12},
+        {x: 140, y: 30, r: 10}, {x: 80, y: 110, r: 14},
+        {x: 200, y: 110, r: 14}, {x: 140, y: 180, r: 15},
+        {x: 140, y: 220, r: 10}, {x: 100, y: 160, r: 11},
+        {x: 180, y: 160, r: 11}
+      ];
+
+      flowers.forEach(f => {
+        drawFlower(f.x, f.y, f.r, '#ffffff', '#8b6b23');
+      });
+
+      // Text Over Flowers
+      ctx.fillStyle = '#4a370e';
+      ctx.font = 'bold 16px Plus Jakarta Sans';
       ctx.textAlign = 'center';
-      ctx.fillText('Scratch Here', canvas.width / 2, canvas.height / 2);
+      ctx.fillText('Scratch Flowers Here', canvas.width / 2, canvas.height / 2);
     }
 
     initScratchCard();
