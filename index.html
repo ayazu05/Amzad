@@ -342,57 +342,58 @@
       line-height: 1.5;
     }
 
-    /* Map Card Bottom Section */
-    .map-card {
-      background: rgba(0, 0, 0, 0.55);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 16px;
-      padding: 18px 12px;
-      margin-bottom: 25px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    /* Clean Map Section (No Black Box) */
+    .map-clean-wrapper {
+      margin-bottom: 35px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .map-title {
       font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      color: var(--text-gold);
-      margin-bottom: 4px;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #2b2b2b;
+      margin-bottom: 2px;
+      text-shadow: 0 1px 3px rgba(255,255,255,0.9);
     }
 
     .map-address {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.85);
+      font-size: 0.85rem;
+      color: #4a4a4a;
       margin-bottom: 12px;
+      font-weight: 500;
+      text-shadow: 0 1px 2px rgba(255,255,255,0.8);
     }
 
     .map-frame {
       width: 100%;
-      height: 180px;
-      border-radius: 10px;
-      border: 0;
+      height: 200px;
+      border-radius: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.8);
       margin-bottom: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
     }
 
     .venue-btn {
       display: inline-block;
-      padding: 8px 18px;
-      background: rgba(255, 255, 255, 0.2);
+      padding: 9px 20px;
+      background: #8b263e;
       color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.4);
       border-radius: 20px;
       text-decoration: none;
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 0.8rem;
-      letter-spacing: 1px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(139, 38, 62, 0.3);
       transition: all 0.3s ease;
     }
 
     .venue-btn:hover {
-      background: #fff;
-      color: #000;
+      background: #6f1c30;
     }
 
     #audio-control {
@@ -521,24 +522,24 @@
       </div>
     </section>
 
-    <!-- LAST SECTION: Location & Google Maps -->
+    <!-- LAST SECTION: Location & Google Maps (Exact Coordinates) -->
     <section class="invitation-section">
       <h2 class="section-title">Venue & Location</h2>
 
       <!-- Green Valley Farm House Lawn 2 -->
-      <div class="map-card">
+      <div class="map-clean-wrapper">
         <h3 class="map-title">Green Valley Farm House Lawn 2</h3>
         <p class="map-address"><i class="fas fa-map-marker-alt"></i> Venue for Nikah Ceremony</p>
-        <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500!2d0!3d0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMDAnMDAuMCJOIDDCsDAwJzAwLjAiRQ!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
-        <a href="https://maps.app.goo.gl/bdSiVDtXaefyujwc6" target="_blank" class="venue-btn"><i class="fas fa-directions"></i> Open in Google Maps</a>
+        <iframe class="map-frame" src="https://maps.google.com/maps?q=28.699318166088975,77.34366397245725&hl=es;z=16&output=embed" allowfullscreen="" loading="lazy"></iframe>
+        <a href="https://www.google.com/maps?q=28.699318166088975,77.34366397245725" target="_blank" class="venue-btn"><i class="fas fa-directions"></i> Open in Google Maps</a>
       </div>
 
       <!-- Kaka Palace -->
-      <div class="map-card">
+      <div class="map-clean-wrapper">
         <h3 class="map-title">Kaka Palace</h3>
         <p class="map-address"><i class="fas fa-map-marker-alt"></i> Venue for Walima Reception</p>
-        <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500!2d0!3d0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMDAnMDAuMCJOIDDCsDAwJzAwLjAiRQ!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
-        <a href="https://maps.app.goo.gl/Z5xe5ZYy6UYGVZN88" target="_blank" class="venue-btn"><i class="fas fa-directions"></i> Open in Google Maps</a>
+        <iframe class="map-frame" src="https://maps.google.com/maps?q=28.72403565615448,77.33706040096709&hl=es;z=16&output=embed" allowfullscreen="" loading="lazy"></iframe>
+        <a href="https://www.google.com/maps?q=28.72403565615448,77.33706040096709" target="_blank" class="venue-btn"><i class="fas fa-directions"></i> Open in Google Maps</a>
       </div>
     </section>
 
