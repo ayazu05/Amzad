@@ -67,7 +67,7 @@
       opacity: 1;
     }
 
-    /* Envelope Intro Screen */
+    /* Envelope Intro Screen (No initial black bg) */
     #envelope-screen {
       position: fixed;
       top: 0;
@@ -75,7 +75,7 @@
       width: 100vw;
       height: 100vh;
       z-index: 9999;
-      background: #000000;
+      background: transparent;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -126,7 +126,7 @@
       50% { opacity: 1; transform: translateX(-50%) scale(1.03); }
     }
 
-    /* Main Content Layout with Top Padding Shift */
+    /* Main Content Layout */
     #main-content {
       position: relative;
       z-index: 10;
@@ -482,7 +482,7 @@
   </div>
 
   <div id="envelope-screen" onclick="handleEnvelopeClick()">
-    <video id="envelope-video" playsinline webkit-playsinline preload="auto" muted>
+    <video id="envelope-video" autoplay loop muted playsinline webkit-playsinline preload="auto">
       <source src="envelope.mp4" type="video/mp4">
     </video>
     <div class="tap-hint" id="tap-hint-box">
@@ -492,7 +492,6 @@
 
   <main id="main-content">
     <div class="content-wrapper">
-      <!-- Section 1: bg.mp4 -->
       <section class="invitation-section" data-bg="bg-video-main">
         <div class="hero-heart"><i class="fas fa-heart"></i></div>
         <div class="bismillah-text">In the Name of Allah</div>
@@ -508,7 +507,6 @@
         </div>
       </section>
 
-      <!-- Section 2: bg.mp4 -->
       <section class="invitation-section" data-bg="bg-video-main">
         <h2 class="section-title">Scratch to Reveal</h2>
         <div class="scratch-container">
@@ -523,7 +521,6 @@
         <button class="save-the-date-btn"><i class="far fa-calendar-plus"></i> SAVE THE DATE</button>
       </section>
 
-      <!-- Section 3: bg.mp4 -->
       <section class="invitation-section" data-bg="bg-video-main">
         <h2 class="section-title" style="font-size: 2rem;">Counting Down to Forever</h2>
         <div class="countdown-grid">
@@ -534,7 +531,6 @@
         </div>
       </section>
 
-      <!-- Section 4 (Event Schedule): bg.mp4 tak rhega -->
       <section class="invitation-section" data-bg="bg-video-main">
         <h2 class="section-title">Events Schedule</h2>
         <div class="event-card">
@@ -549,7 +545,6 @@
         </div>
       </section>
 
-      <!-- Section 5 (Venue & Location): Yahan se bg1.jpg par change hoga -->
       <section class="invitation-section" data-bg="bg-img-1">
         <h2 class="section-title">Venue & Location</h2>
         <div class="map-clean-wrapper">
@@ -590,6 +585,10 @@
         mainBgVid.muted = true;
         mainBgVid.play().catch(e => console.log(e));
       }
+      if (envVideo) {
+        envVideo.muted = true;
+        envVideo.play().catch(e => console.log(e));
+      }
       setupScrollAnimations();
     });
 
@@ -602,23 +601,8 @@
 
       if (tapHint) tapHint.style.display = 'none';
 
-      envVideo.muted = false;
-      const playPromise = envVideo.play();
-
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          setTimeout(revealMainCard, 1000);
-        }).catch(err => {
-          revealMainCard();
-        });
-      } else {
-        revealMainCard();
-      }
-
-      setTimeout(revealMainCard, 1200);
+      revealMainCard();
     }
-
-    envVideo.addEventListener('ended', revealMainCard);
 
     function revealMainCard() {
       if (isOpened) return;
