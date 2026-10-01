@@ -33,34 +33,46 @@
       width: 100%;
       height: 100%;
       font-family: 'Cormorant Garamond', serif;
-      background: #1a1c2e;
+      background: transparent; /* Fixed: Removed solid color hiding video */
       color: var(--text-white);
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
 
-    /* Background Sky Filter & Video */
+    /* Fixed Background Video Styling */
     #bg-video-container {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
       overflow: hidden;
-      background: linear-gradient(180deg, #2b3a4a 0%, #4a4258 40%, #7d515a 70%, #a2695c 100%);
+      pointer-events: none;
     }
 
     #bg-video {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 100%;
-      height: 100%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
       transform: translate(-50%, -50%);
       object-fit: cover;
-      opacity: 0.85;
       display: block;
+    }
+
+    #bg-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.35); /* Subtle dark overlay so text stays readable */
+      pointer-events: none;
     }
 
     /* Animated Birds */
@@ -71,7 +83,7 @@
       width: 88px;
       height: 125px;
       position: absolute;
-      z-index: -1;
+      z-index: 3;
       opacity: 0.3;
       animation: fly-cycle 1s steps(10) infinite;
     }
@@ -82,13 +94,16 @@
       left: -10%;
       transform: scale(0.3) translateY(0px);
       animation: fly-right 12s linear infinite;
+      z-index: 3;
     }
 
     .bird-container-2 {
+      position: absolute;
       top: 25%;
       left: -20%;
       transform: scale(0.2) translateY(0px);
       animation: fly-right 18s linear infinite 4s;
+      z-index: 3;
     }
 
     @keyframes fly-cycle {
@@ -99,17 +114,6 @@
       0% { left: -10%; transform: scale(0.3) translateY(0px); }
       50% { transform: scale(0.3) translateY(-20px); }
       100% { left: 110%; transform: scale(0.3) translateY(0px); }
-    }
-
-    #bg-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-      background: radial-gradient(circle at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.45) 100%);
-      pointer-events: none;
     }
 
     /* Fullscreen Envelope Intro Screen */
@@ -475,17 +479,17 @@
 
   <!-- Background Video Container -->
   <div id="bg-video-container">
-    <video id="bg-video" loop muted playsinline preload="auto">
+    <video id="bg-video" autoplay loop muted playsinline webkit-playsinline preload="auto">
       <source src="bg.mp4" type="video/mp4">
     </video>
-    <div class="bird-container"><div class="bird"></div></div>
-    <div class="bird-container-2"><div class="bird"></div></div>
   </div>
   <div id="bg-overlay"></div>
+  <div class="bird-container"><div class="bird"></div></div>
+  <div class="bird-container-2"><div class="bird"></div></div>
 
   <!-- Opening Envelope Screen -->
   <div id="envelope-screen" onclick="playEnvelopeVideo()">
-    <video id="envelope-video" playsinline preload="auto" muted>
+    <video id="envelope-video" playsinline webkit-playsinline preload="auto" muted>
       <source src="envelope.mp4" type="video/mp4">
     </video>
     <div id="tap-prompt"><i class="fas fa-hand-pointer"></i> TAP ANYWHERE TO OPEN</div>
@@ -599,20 +603,28 @@
     const bgMusic = document.getElementById('bg-music');
     let videoStarted = false;
 
-    // Direct user tap handler to play
+    // Force play bg-video on load
+    window.addEventListener('DOMContentLoaded', () => {
+      bgVideo.muted = true;
+      bgVideo.play().catch(e => console.log('Autoplay deferred:', e));
+    });
+
+    // Direct user tap handler
     function playEnvelopeVideo() {
       if (videoStarted) return;
       videoStarted = true;
       tapPrompt.style.display = 'none';
 
-      // Start playing envelope animation
+      // Ensure background video is active
+      bgVideo.muted = true;
+      bgVideo.play().catch(e => console.log(e));
+
+      // Play envelope video
       envVideo.muted = false;
       envVideo.play().catch(() => {
         revealMainCard();
       });
 
-      // Start background video & music on tap
-      bgVideo.play().catch(() => {});
       if (bgMusic) bgMusic.play().catch(() => {});
     }
 
