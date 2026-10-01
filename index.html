@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Wedding Invitation | Amzad & Romana</title>
 
   <!-- Google Fonts -->
@@ -26,6 +26,7 @@
       padding: 0;
       user-select: none;
       -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
     html, body {
@@ -48,6 +49,7 @@
       z-index: 1;
       overflow: hidden;
       pointer-events: none;
+      background: #fdfbf7;
     }
 
     .bg-media {
@@ -60,7 +62,8 @@
       object-position: center center;
       display: block;
       opacity: 0;
-      transition: opacity 1s ease-in-out;
+      transition: opacity 0.8s ease-in-out;
+      will-change: opacity;
     }
 
     .bg-media.active {
@@ -75,7 +78,7 @@
       width: 100vw;
       height: 100vh;
       z-index: 9999;
-      background: transparent;
+      background: #000000;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -444,7 +447,7 @@
   <button id="audio-control" onclick="toggleAudio()">
     <i id="audio-icon" class="fas fa-music"></i>
   </button>
-  <audio id="bg-music" loop src="audio.mp3" preload="auto"></audio>
+  <audio id="bg-music" loop src="audio.mp3" preload="auto" playsinline webkit-playsinline></audio>
 
   <div id="bg-canvas-container">
     <video id="bg-video-main" class="bg-media active" autoplay loop muted playsinline webkit-playsinline preload="auto">
@@ -453,8 +456,8 @@
     <img id="bg-img-1" class="bg-media" src="bg1.jpg" alt="Background">
   </div>
 
-  <div id="envelope-screen" onclick="handleEnvelopeClick()">
-    <video id="envelope-video" playsinline webkit-playsinline preload="auto" muted>
+  <div id="envelope-screen">
+    <video id="envelope-video" muted playsinline webkit-playsinline preload="auto">
       <source src="envelope.mp4" type="video/mp4">
     </video>
   </div>
@@ -548,35 +551,55 @@
     const mainBgVid = document.getElementById('bg-video-main');
     let isOpened = false;
 
+    // Safari Autoplay Initialization
     window.addEventListener('DOMContentLoaded', () => {
       if (mainBgVid) {
         mainBgVid.muted = true;
-        mainBgVid.play().catch(e => console.log(e));
+        const playMain = mainBgVid.play();
+        if (playMain !== undefined) {
+          playMain.catch(() => {
+            // Safari lock handling
+          });
+        }
       }
       setupScrollAnimations();
     });
 
-    // Touch/Tap Event Handler
-    function handleEnvelopeClick() {
+    // Unified Safari / iOS Touch & Click Listener
+    function triggerEnvelopeOpen(e) {
+      if (e) e.preventDefault();
       if (isOpened) return;
 
-      // Play background audio
+      // 1. Play Background Music on User Gesture
       if (bgMusic) {
-        bgMusic.play().catch(e => console.log("Audio playback:", e));
+        bgMusic.play().catch(e => console.log("Audio:", e));
       }
 
-      // Unmute & play envelope video
-      envVideo.muted = false;
-      const playPromise = envVideo.play();
+      // 2. Unlock Background Video in Safari
+      if (mainBgVid) {
+        mainBgVid.muted = true;
+        mainBgVid.play().catch(() => {});
+      }
 
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          revealMainCard();
-        });
+      // 3. Unmute & Play Envelope Animation Video
+      if (envVideo) {
+        envVideo.muted = false;
+        const playEnv = envVideo.play();
+        if (playEnv !== undefined) {
+          playEnv.then(() => {
+            // Envelope started playing
+          }).catch(() => {
+            // Fallback if video fails to play on old browsers
+            revealMainCard();
+          });
+        }
       }
     }
 
-    // Direct listener: Video poori play hone par card open hoga
+    envScreen.addEventListener('click', triggerEnvelopeOpen);
+    envScreen.addEventListener('touchstart', triggerEnvelopeOpen, { passive: false });
+
+    // Video Ends -> Open Card
     envVideo.addEventListener('ended', revealMainCard);
 
     function revealMainCard() {
@@ -588,7 +611,6 @@
         mainContent.classList.add('visible');
         triggerInitialAnimations();
         if (mainBgVid) {
-          mainBgVid.currentTime = 0;
           mainBgVid.play().catch(() => {});
         }
       }, 200);
@@ -615,7 +637,7 @@
             if (targetBgId) switchBgMedia(targetBgId);
           }
         });
-      }, { threshold: 0.3 });
+      }, { threshold: 0.2 });
 
       document.querySelectorAll('.invitation-section').forEach(section => {
         observer.observe(section);
